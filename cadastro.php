@@ -62,7 +62,7 @@
                     <span class="lnr lnr-eye"></span>
                 </div>
 
-                <input type='hidden' value='0' name='adm'>
+                <input type="hidden" value="0" name="adm">
                 <input type="submit" name="Cadastrar" value="Cadastrar" id="button" class="submit">
 
                 <a href="index.php" id="button" class="voltar">Voltar</a>

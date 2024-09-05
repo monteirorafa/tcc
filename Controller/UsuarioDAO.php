@@ -91,4 +91,13 @@ class UsuarioDAO
             echo json_encode($data);
         }
     }
+
+    public function consultaEndereco()
+    {
+        $pstmt = $this->conexao->prepare("SELECT * FROM usuario WHERE id = :id");
+        $pstmt->bindValue(":id", $_SESSION['id']);
+        $pstmt->execute();
+        $usuario = $pstmt->fetchAll(PDO::FETCH_CLASS, Usuario::class);
+        return $usuario;
+    }
 }

@@ -47,7 +47,7 @@
                     <input type="file" name="imagem" id="imagem" class="imagem" accept="image/*" required />
                 </div>
 
-                <input type='hidden' value='' name='criado'>
+                <input type="hidden" value="" name="criado">
                 <input type="submit" name="Cadastrar" value="Cadastrar" id="button" class="submit">
 
                 <a href="produtos.php" id="button" class="voltar">Voltar</a>

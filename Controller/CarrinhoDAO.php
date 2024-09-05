@@ -91,5 +91,17 @@ class CarrinhoDAO
         }
     }
 
-    public function excluirCarrinho($idProduto) {}
+    public function excluirCarrinho($idProduto)
+    {
+        $deleteCarrinho = $this->conexao->prepare("DELETE FROM carrinho WHERE idProduto = :idProduto");
+        $deleteCarrinho->bindValue(':idProduto', $idProduto);
+        $deleteCarrinho->execute();
+        if ($deleteCarrinho) {
+            echo "<script> alert('Item excluido com sucesso.');
+            window.location.href = 'Carrinho.php';
+            </script>";
+        } else {
+            echo "Erro " . $deleteCarrinho . "<br>" . $this->conexao->errorInfo();
+        }
+    }
 }

@@ -1,12 +1,14 @@
 <?php
 
-class carrinho
+class pedido
 {
     private $id;
+    private $idCarrinho;
     private $idUsuario;
     private $idProduto;
-    private $vInicial;
-    private $quantidade;
+    private $criacao;
+    private $valor;
+    private $entrega;
     private $situacao;
 
     public function __construct()
@@ -42,6 +44,18 @@ class carrinho
         return $this;
     }
 
+    public function getIdCarrinho()
+    {
+        return $this->idCarrinho;
+    }
+
+    public function setIdCarrinho($idCarrinho): self
+    {
+        $this->idCarrinho = $idCarrinho;
+
+        return $this;
+    }
+
     public function getIdUsuario()
     {
         return $this->idUsuario;
@@ -66,26 +80,38 @@ class carrinho
         return $this;
     }
 
-    public function getVInicial()
+    public function getCriacao()
     {
-        return $this->vInicial;
+        return $this->criacao;
     }
 
-    public function setVInicial($vInicial): self
+    public function setCriacao($criacao): self
     {
-        $this->vInicial = $vInicial;
+        $this->criacao = $criacao;
 
         return $this;
     }
 
-    public function getQuantidade()
+    public function getValor()
     {
-        return $this->quantidade;
+        return $this->valor;
     }
 
-    public function setQuantidade($quantidade): self
+    public function setValor($valor): self
     {
-        $this->quantidade = $quantidade;
+        $this->valor = $valor;
+
+        return $this;
+    }
+
+    public function getEntrega()
+    {
+        return $this->entrega;
+    }
+
+    public function setEntrega($entrega): self
+    {
+        $this->entrega = $entrega;
 
         return $this;
     }
@@ -105,10 +131,12 @@ class carrinho
     public function __toString()
     {
         return "ID: " . $this->id .
-            " ID Usuário: " . $this->idUsuario .
-            " ID Produto: " . $this->idProduto .
-            " Valor Inicial: " . $this->vInicial .
-            " Quantidade: " . $this->quantidade .
+            " idCarrinho: " . $this->idCarrinho .
+            " idUsuario: " . $this->idUsuario .
+            " idProduto: " . $this->idProduto .
+            " Criação: " . $this->criacao .
+            " Valor: " . $this->valor .
+            " Entrega: " . $this->entrega .
             " Situação: " . $this->situacao .
             "<br><br>";
     }
