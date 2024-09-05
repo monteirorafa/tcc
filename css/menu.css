@@ -1,0 +1,22 @@
+.nav-wrapper .input-field input[type=search] {
+  /*Formatação da barra de pesquisa*/
+  height: 50px;
+  margin-top: 7px;
+  border-radius: 50px;
+  background-color: white;
+}
+
+#pesq {
+  /*Tamanho da barra de pesquisa*/
+  max-width: 384px;
+}
+
+#pesq .material-icons{
+  /*Alinhar icones da barra de pesquisa*/
+  margin-top: -7px;
+}
+
+.nav-border {
+  /*Cor de fundo do menu*/
+  background-image: linear-gradient(to right, #8A2BE2 , #000080);
+}

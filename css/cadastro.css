@@ -1,0 +1,141 @@
+body {
+    /*Mudar cor do fundo da pagina inteira*/
+    background-image: linear-gradient(45deg, #8A2BE2, #000080);
+    height: 100vh;
+}
+
+.box {
+    /*Mudar cor do fundo da div box*/
+    background-color: #A9A9A9;
+
+    /*Centralização da div*/
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    /*Bordas*/
+    padding: 15px;
+    border-radius: 15px;
+    width: 500px;
+}
+
+fieldset {
+    /*Riscos da borda envolta do box*/
+    border: 3px solid black;
+}
+
+legend {
+    /*Título do box*/
+    border: 1px solid;
+    padding: 10px;
+    text-align: center;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+.inputbox {
+    /*Posição do box*/
+    position: relative;
+    margin: 30px;
+}
+
+.inputUser {
+    /*Formata o input que o usuário digita as informações*/
+    background: none;
+    border: none;
+    border-bottom: 1px solid white;
+    outline: none;
+    font-size: 18px;
+    width: 100%;
+}
+
+.labelInput {
+    /*Coloca o label dentro do input*/
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    pointer-events: none;
+    transition: .8s;
+}
+
+.selectBox {
+    /*Formatação do selectBox Categoria*/
+    width: 79%;
+    text-align: center;
+    padding: 5px;
+    margin-left: 5px;
+}
+
+.field-wrap {
+    /*Centralização da inserção da imagem no cadastro*/
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.labelInputFile {
+    /*Espaçamento entre o label e o input da imagem*/
+    margin-bottom: 20px;
+}
+
+#imagem {
+    /*Espaçamento entre o imagem e o botão Cadastrar*/
+    margin-bottom: 20px;
+}
+
+.img {
+    /*Tamanho da imagem no alterar produto*/
+    margin-top: 20px;
+    width: 100px;
+    height: 100px;
+}
+
+.inputUser:focus ~ .labelInput,
+.inputUser:valid ~ .labelInput {
+    /*Faz o efeito do label sair do input quando alguma coisa é digitada*/
+    top: -20px;
+    font-size: 12px;
+}
+.labelCod{
+    /*Faz o efeito do label sair do input no Código do alteras*/
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    pointer-events: none;
+    transition: .8s;
+    top: -20px;
+    font-size: 12px;
+}
+
+#button {
+    /*Faz a formatação do botão*/
+    background-color: #8A2BE2;
+    font-family: 'Times New Roman', Times, serif;
+    color: white;
+    border: none;
+    padding: 15px;
+    border-radius: 15px;
+    font-size: 18px;
+    margin: 10px auto;
+    display: block;
+}
+
+#button:hover {
+    /*Faz a formatação do botão ao passar o mouse em cima*/
+    background-color: #9F5FFF;
+    cursor: pointer;
+}
+
+.submit {
+    /*width do submit para não ficar colado no box*/
+    width: 90%;
+}
+
+.voltar {
+    /*width do voltar menor pois é um <a> também centraliza o texto e tira o sublinhado*/
+    width: 84%;
+    text-align: center;
+    text-decoration: none;
+}
