@@ -25,100 +25,122 @@ include_once __DIR__ . '../Controller/PedidoDAO.php';
 
 <body>
 
-    <?php
-    $vTotal = 0;
-    $usuarioDAO = new UsuarioDAO();
-    $objetoUsuario = $usuarioDAO->consultaEndereco();
-    $carrinhoDAO = new CarrinhoDAO();
-    $objetoCarrinho = $carrinhoDAO->consultaCarrinho();
-    foreach ($objetoUsuario as $usuario) {
-        $usuario = new Usuario($usuario);
-    ?>
+    <div class="container">
+        <form action="compra.php" method="post">
+            <h1 class="titulo">Confira seus dados</h1>
+            <div class="card">
+                <div class="card-content row">
 
-        <div class="container">
-            <form action="compra.php" method="post">
-                <h1 class="titulo">Confira seus dados</h1>
-                <div class="card">
-                    <div class="card-content row">
-
-                        <!--
+                    <!--
                 <div class="col s2">
                     <div class="center-align">
                         <img src="img_end/420.png" alt="Imagem do endereço">
                     </div>
                 </div>
--->
+                    -->
 
-                        <div class="col s10">
-                            <span class="card-title">Dados de entrega:</span>
-                            <p class="product-price"> Endereço:
-                                <?php echo $usuario->getEndereco() . ", " . $usuario->getNumero(); ?> </p>
-                            <p class="product-price"> Cidade:
-                                <?php echo $usuario->getCidade() . "/ " . $usuario->getEstado(); ?></p>
-                            <p class="product-price"> CEP: <?php echo $usuario->getCep(); ?></p>
-                            <p class="product-price"> Contato: <?php echo $usuario->getTelefone(); ?></p>
-                            <div class="editar"><a href="#.php">Editar endereço</a></div>
-                        </div>
+                    <?php
+                    $vTotal = 0;
+                    $usuarioDAO = new UsuarioDAO();
+                    $objetoUsuario = $usuarioDAO->consultaEndereco();
+                    foreach ($objetoUsuario as $usuario) {
+                        $usuario = new Usuario($usuario);
+                    ?>
 
-                        <p>Selecione o tipo de entrega:</p>
-                        <input type="radio" id="retirada" name="entrega" value="retirada">
-                        <label for="retirada">Retirar na Loja</label><br>
-                        <input type="radio" id="correios" name="entrega" value="correios">
-                        <label for="correios">Correios</label><br>
-                        <input type="radio" id="transportadora" name="entrega" value="transportadora">
-                        <label for="transportadora">Transportadora</label>
-
+                    <div class="col s10">
+                        <span class="card-title">Dados de entrega:</span>
+                        <p class="product-price"> Endereço:
+                            <?php echo $usuario->getEndereco() . ", " . $usuario->getNumero(); ?> </p>
+                        <p class="product-price"> Cidade:
+                            <?php echo $usuario->getCidade() . "/ " . $usuario->getEstado(); ?></p>
+                        <p class="product-price"> CEP: <?php echo $usuario->getCep(); ?></p>
+                        <p class="product-price"> Contato: <?php echo $usuario->getTelefone(); ?></p>
+                        <div class="editar"><a href="#.php">Editar endereço</a></div>
                     </div>
+
+                    <p>Selecione o tipo de entrega:</p>
+                    <input type="radio" id="retirada" name="entrega" value="retirada" required checked>
+                    <label for="retirada">Retirar na Loja</label><br>
+                    <input type="radio" id="correios" name="entrega" value="correios">
+                    <label for="correios">Correios</label><br>
+                    <input type="radio" id="transportadora" name="entrega" value="transportadora">
+                    <label for="transportadora">Transportadora</label>
+
                 </div>
 
+                <div>
+                    <p>Selecione a forma de pagamento:</p>
+                    <input type="radio" id="pix" name="pagamento" value="pix" required checked>
+                    <label for="pix">Pix</label><br>
+                    <input type="radio" id="cartao" name="pagamento" value="cartao">
+                    <label for="cartao">Cartão</label><br>
+                    <input type="radio" id="Boleto" name="pagamento" value="Boleto">
+                    <label for="Boleto">Boleto</label>
+                </div>
 
-                <?php foreach ($objetoCarrinho as $carrinho) {
-                    $carrinho = new Carrinho($carrinho);
-                    $produtoDAO = new ProdutoDAO();
-                    $objetoProduto = $produtoDAO->selectProduto($carrinho->getIdProduto());
-                    foreach ($objetoProduto as $produto) {
-                        $produto = new Produto($produto);
-                ?>
-
-                        <ul class="collection">
-                            <li class="collection-item avatar">
-                                <img src="<?php echo $produto->getImagem() ?>" alt="" class="circle">
-                                <span class="title"><?php echo $produto->getNome() ?></span>
-                                <p><?php echo $produto->getDescricao() ?><br>
-                                    R$: <?php echo $produto->getValor() ?> <br>
-                                    <?php echo $produto->getQuantidade() . " unidades" ?>
-                                </p>
-                                <p class="secondary-content">Valor total deste item: R$
-                                    <?php echo $pTotal = $carrinho->getVInicial() * $carrinho->getQuantidade(); ?></p>
-                            </li>
-                        </ul>
+            </div>
 
             <?php
-                        $vTotal += $pTotal;
-                    }
-                }
-            }
+                        $carrinhoDAO = new CarrinhoDAO();
+                        $objetoCarrinho = $carrinhoDAO->consultaCarrinho();
+                        foreach ($objetoCarrinho as $carrinho) {
+                            $carrinho = new Carrinho($carrinho);
+                            $produtoDAO = new ProdutoDAO();
+                            $objetoProduto = $produtoDAO->selectProduto($carrinho->getIdProduto());
+                            foreach ($objetoProduto as $produto) {
+                                $produto = new Produto($produto);
             ?>
+
+            <ul class="collection">
+                <li class="collection-item avatar">
+                    <img src="<?php echo $produto->getImagem() ?>" alt="" class="circle">
+                    <span class="title"><?php echo $produto->getNome() ?></span>
+                    <p><?php echo $produto->getDescricao() ?><br>
+                        R$: <?php echo $produto->getValor() ?> <br>
+                        <?php echo $produto->getQuantidade() . " unidades" ?>
+                    </p>
+                    <p class="secondary-content">Valor total deste item: R$
+                        <?php echo $pTotal = $carrinho->getVInicial() * $carrinho->getQuantidade(); ?></p>
+                </li>
+            </ul>
+
 
             <input type="hidden" value="<?php echo $carrinho->getId() ?>" name="idCarrinho">
             <input type="hidden" value="<?php echo $_SESSION['id'] ?>" name="idUsuario">
             <input type="hidden" value="<?php echo $produto->getId(); ?>" name="idProduto">
-            <input type="hidden" value="" name="criacao">
+            <input type="hidden" value="<?php echo $numero; ?>" name="numero">
             <input type="hidden" value="<?php echo $vTotal ?>" name="valor">
             <input type="hidden" value="processando" name="situacao">
-            <input type="submit" name="finalizar" value="finalizar" id="button" class="submit">
-            </form>
 
             <?php
-            if (isset($_POST["finalizar"])) {
-                $pedidoDAO = new PedidoDAO();
-                $pedido = new Pedido($_POST);
-                $pedidoDAO->finalizarPedido($pedido);
-            }
-            ?>
+                                $vTotal += $pTotal;
 
-        </div>
-        <div class="total">Total R$ <?php echo $vTotal ?> </div>
+
+
+                                if (isset($_POST["finalizar"])) {
+                                    $pedidoDAO = new PedidoDAO();
+                                    $pedido = new Pedido($_POST);
+                                    echo $pedido;
+                                    //$pedidoDAO->finalizarPedido($pedido);
+                                }
+                            }
+                        }
+                    }
+                    $pedidoDAO = new PedidoDAO();
+                    $numero = $pedidoDAO->atribuiNumero();
+        ?>
+
+
+
+
+            <div>
+                <input type="submit" name="finalizar" value="finalizar" id="button" class="submit">
+            </div>
+
+        </form>
+    </div>
+
+    <div class="total">Total R$ <?php echo $vTotal ?> </div>
 
 </body>
 

@@ -6,8 +6,10 @@ class pedido
     private $idCarrinho;
     private $idUsuario;
     private $idProduto;
+    private $numero;
     private $criacao;
     private $valor;
+    private $pagamento;
     private $entrega;
     private $situacao;
 
@@ -80,6 +82,18 @@ class pedido
         return $this;
     }
 
+    public function getNumero()
+    {
+        return $this->numero;
+    }
+
+    public function setNumero($numero): self
+    {
+        $this->numero = $numero;
+
+        return $this;
+    }
+
     public function getCriacao()
     {
         return $this->criacao;
@@ -100,6 +114,18 @@ class pedido
     public function setValor($valor): self
     {
         $this->valor = $valor;
+
+        return $this;
+    }
+
+    public function getPagamento()
+    {
+        return $this->pagamento;
+    }
+
+    public function setPagamento($pagamento): self
+    {
+        $this->pagamento = $pagamento;
 
         return $this;
     }
@@ -134,8 +160,10 @@ class pedido
             " idCarrinho: " . $this->idCarrinho .
             " idUsuario: " . $this->idUsuario .
             " idProduto: " . $this->idProduto .
+            " Numero: " . $this->numero .
             " Criação: " . $this->criacao .
             " Valor: " . $this->valor .
+            " Pagamento: " . $this->pagamento .
             " Entrega: " . $this->entrega .
             " Situação: " . $this->situacao .
             "<br><br>";
