@@ -1,10 +1,11 @@
 <?php
 
-class carrinho
+class ItemCarrinho
 {
     private $id;
-    private $idUsuario;
-    private $situacao;
+    private $idCarrinho;
+    private $idProduto;
+    private $quantidade;
 
     public function __construct()
     {
@@ -39,26 +40,38 @@ class carrinho
         return $this;
     }
 
-    public function getIdUsuario()
+    public function getIdCarrinho()
     {
-        return $this->idUsuario;
+        return $this->idCarrinho;
     }
 
-    public function setIdUsuario($idUsuario): self
+    public function setIdCarrinho($idCarrinho): self
     {
-        $this->idUsuario = $idUsuario;
+        $this->idCarrinho = $idCarrinho;
 
         return $this;
     }
 
-    public function getSituacao()
+    public function getIdProduto()
     {
-        return $this->situacao;
+        return $this->idProduto;
     }
 
-    public function setSituacao($situacao): self
+    public function setIdProduto($idProduto): self
     {
-        $this->situacao = $situacao;
+        $this->idProduto = $idProduto;
+
+        return $this;
+    }
+
+    public function getQuantidade()
+    {
+        return $this->quantidade;
+    }
+
+    public function setQuantidade($quantidade): self
+    {
+        $this->quantidade = $quantidade;
 
         return $this;
     }
@@ -66,8 +79,9 @@ class carrinho
     public function __toString()
     {
         return "ID: " . $this->id .
-            " ID Usuário: " . $this->idUsuario .
-            " Situação: " . $this->situacao .
+            " ID Carrinho: " . $this->idCarrinho .
+            " ID Produto: " . $this->idProduto .
+            " Quantidade: " . $this->quantidade .
             "<br><br>";
     }
 }

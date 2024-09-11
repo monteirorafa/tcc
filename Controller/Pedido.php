@@ -5,10 +5,8 @@ class pedido
     private $id;
     private $idCarrinho;
     private $idUsuario;
-    private $idProduto;
-    private $numero;
-    private $criacao;
-    private $valor;
+    private $criado;
+    private $total;
     private $pagamento;
     private $entrega;
     private $situacao;
@@ -70,50 +68,26 @@ class pedido
         return $this;
     }
 
-    public function getIdProduto()
+    public function getCriado()
     {
-        return $this->idProduto;
+        return $this->criado;
     }
 
-    public function setIdProduto($idProduto): self
+    public function setCriado($criado): self
     {
-        $this->idProduto = $idProduto;
+        $this->criado = $criado;
 
         return $this;
     }
 
-    public function getNumero()
+    public function getTotal()
     {
-        return $this->numero;
+        return $this->total;
     }
 
-    public function setNumero($numero): self
+    public function setTotal($total): self
     {
-        $this->numero = $numero;
-
-        return $this;
-    }
-
-    public function getCriacao()
-    {
-        return $this->criacao;
-    }
-
-    public function setCriacao($criacao): self
-    {
-        $this->criacao = $criacao;
-
-        return $this;
-    }
-
-    public function getValor()
-    {
-        return $this->valor;
-    }
-
-    public function setValor($valor): self
-    {
-        $this->valor = $valor;
+        $this->total = $total;
 
         return $this;
     }
@@ -159,10 +133,8 @@ class pedido
         return "ID: " . $this->id .
             " idCarrinho: " . $this->idCarrinho .
             " idUsuario: " . $this->idUsuario .
-            " idProduto: " . $this->idProduto .
-            " Numero: " . $this->numero .
-            " Criação: " . $this->criacao .
-            " Valor: " . $this->valor .
+            " Criação: " . $this->criado .
+            " Total: " . $this->total .
             " Pagamento: " . $this->pagamento .
             " Entrega: " . $this->entrega .
             " Situação: " . $this->situacao .

@@ -13,30 +13,40 @@ class PedidoDAO
         $this->conexao = Conexao::getConexao();
     }
 
-    public function finalizarPedido(Pedido $pedido)
+    public function adicionaPedido(Pedido $pedido, $idUsuario)
     {
-        $pstmt = $this->conexao->prepare("INSERT INTO pedidos (idCarrinho, idUsuario, idProduto, numero, criacao, valor, pagamento, entrega, situacao) 
-        VALUES (:idCarrinho, :idUsuario, :idProduto, :numero, CURRENT_TIMESTAMP, :valor, :pagamento, :entrega, :situacao)");
+        $pstmt = $this->conexao->prepare("INSERT INTO pedidos (idCarrinho, idUsuario, criado, total, pagamento, entrega, situacao) 
+        VALUES (:idCarrinho, :idUsuario, CURRENT_TIMESTAMP, :total, :pagamento, :entrega, :situacao)");
         $pstmt->bindValue(":idCarrinho", $pedido->getIdCarrinho());
         $pstmt->bindValue(":idUsuario", $pedido->getIdUsuario());
-        $pstmt->bindValue(":idProduto", $pedido->getIdProduto());
-        $pstmt->bindValue(":numero", $pedido->getNumero());
-        $pstmt->bindValue(":valor", $pedido->getValor());
+        $pstmt->bindValue(":total", $pedido->getTotal());
         $pstmt->bindValue(":pagamento", $pedido->getPagamento());
         $pstmt->bindValue(":entrega", $pedido->getEntrega());
         $pstmt->bindValue(":situacao", $pedido->getSituacao());
-        $pstmt->execute();
-        if ($pstmt) {
+
+        if ($pstmt->execute()) {
+            $selectPedido = $this->conexao->prepare("SELECT * FROM itemcarrinho WHERE idCarrinho = :idCarrinho");
+            $selectPedido->bindValue(":idCarrinho", $pedido->getIdCarrinho());
+            $selectPedido->execute();
+            $itens = $selectPedido->fetchAll(PDO::FETCH_ASSOC);
+
+            if ($itens) {
+                foreach ($itens as $item) {
+                    $estoque = $this->conexao->prepare("UPDATE produto SET quantidade = quantidade - :quantidade WHERE id = :idProduto");
+                    $estoque->bindValue(":quantidade", $item["quantidade"]);
+                    $estoque->bindValue(":idProduto", $item["idProduto"]);
+                    $estoque->execute();
+                }
+
+                $carrinho = $this->conexao->prepare("UPDATE carrinho SET situacao = :situacao WHERE idUsuario = :idUsuario");
+                $carrinho->bindValue(":situacao", "inativo");
+                $carrinho->bindValue(":idUsuario", $idUsuario);
+                $carrinho->execute();
+            }
+
             echo "<script> alert('Pedido realizado.');</script>";
         } else {
             echo "Erro " . $pstmt . "<br>" . $this->conexao->errorInfo();
         }
-    }
-
-    public function atribuiNumero()
-    {
-        $verificaPedidos = $this->conexao->prepare("SELECT IFNULL(MAX(numero), 0) + 1 FROM pedidos");
-        $numero = $verificaPedidos->execute();
-        return $numero;
     }
 }

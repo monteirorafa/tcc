@@ -8,6 +8,8 @@ include_once __DIR__ . '../Controller/Produto.php';
 include_once __DIR__ . '../Controller/ProdutoDAO.php';
 include_once __DIR__ . '../Controller/Carrinho.php';
 include_once __DIR__ . '../Controller/CarrinhoDAO.php';
+include_once __DIR__ . '../Controller/ItemCarrinho.php';
+include_once __DIR__ . '../Controller/ItemCarrinhoDAO.php';
 include_once __DIR__ . '../Controller/Usuario.php';
 include_once __DIR__ . '../Controller/UsuarioDAO.php';
 include_once __DIR__ . '../Controller/Pedido.php';
@@ -26,7 +28,7 @@ include_once __DIR__ . '../Controller/PedidoDAO.php';
 <body>
 
     <div class="container">
-        <form action="compra.php" method="post">
+        <form action="index.php" method="post">
             <h1 class="titulo">Confira seus dados</h1>
             <div class="card">
                 <div class="card-content row">
@@ -40,6 +42,7 @@ include_once __DIR__ . '../Controller/PedidoDAO.php';
                     -->
 
                     <?php
+                    $arrayPedidos = array();
                     $vTotal = 0;
                     $usuarioDAO = new UsuarioDAO();
                     $objetoUsuario = $usuarioDAO->consultaEndereco();
@@ -81,14 +84,27 @@ include_once __DIR__ . '../Controller/PedidoDAO.php';
             </div>
 
             <?php
+
                         $carrinhoDAO = new CarrinhoDAO();
                         $objetoCarrinho = $carrinhoDAO->consultaCarrinho();
-                        foreach ($objetoCarrinho as $carrinho) {
-                            $carrinho = new Carrinho($carrinho);
-                            $produtoDAO = new ProdutoDAO();
-                            $objetoProduto = $produtoDAO->selectProduto($carrinho->getIdProduto());
-                            foreach ($objetoProduto as $produto) {
-                                $produto = new Produto($produto);
+                        $carrinhoID = $carrinhoDAO->consultaCarrinhoId();
+                        $itemDAO = new ItemCarrinhoDAO();
+                        $objetoItem = $itemDAO->consultaItem($carrinhoID);
+                        $itensPorProduto = [];
+                        foreach ($objetoItem as $itemData) {
+                            $item = new ItemCarrinho($itemData);
+                            $produtoId = $item->getIdProduto();
+                            if (!isset($itensPorProduto[$produtoId])) {
+                                $itensPorProduto[$produtoId] = [];
+                            }
+                            $itensPorProduto[$produtoId][] = $item;
+                        }
+
+                        foreach ($objetoCarrinho as $produtoData) {
+                            $produto = new Produto($produtoData);
+                            $produtoId = $produto->getId();
+                            if (isset($itensPorProduto[$produtoId])) {
+                                foreach ($itensPorProduto[$produtoId] as $item) {
             ?>
 
             <ul class="collection">
@@ -97,50 +113,41 @@ include_once __DIR__ . '../Controller/PedidoDAO.php';
                     <span class="title"><?php echo $produto->getNome() ?></span>
                     <p><?php echo $produto->getDescricao() ?><br>
                         R$: <?php echo $produto->getValor() ?> <br>
-                        <?php echo $produto->getQuantidade() . " unidades" ?>
+                        <?php echo $item->getQuantidade() . " unidades" ?>
                     </p>
                     <p class="secondary-content">Valor total deste item: R$
-                        <?php echo $pTotal = $carrinho->getVInicial() * $carrinho->getQuantidade(); ?></p>
+                        <?php echo $pTotal = $produto->getValor() * $item->getQuantidade(); ?></p>
                 </li>
             </ul>
 
-
-            <input type="hidden" value="<?php echo $carrinho->getId() ?>" name="idCarrinho">
-            <input type="hidden" value="<?php echo $_SESSION['id'] ?>" name="idUsuario">
-            <input type="hidden" value="<?php echo $produto->getId(); ?>" name="idProduto">
-            <input type="hidden" value="<?php echo $numero; ?>" name="numero">
-            <input type="hidden" value="<?php echo $vTotal ?>" name="valor">
-            <input type="hidden" value="processando" name="situacao">
-
             <?php
-                                $vTotal += $pTotal;
 
-
-
-                                if (isset($_POST["finalizar"])) {
-                                    $pedidoDAO = new PedidoDAO();
-                                    $pedido = new Pedido($_POST);
-                                    echo $pedido;
-                                    //$pedidoDAO->finalizarPedido($pedido);
+                                    $vTotal += $pTotal;
                                 }
                             }
                         }
                     }
-                    $pedidoDAO = new PedidoDAO();
-                    $numero = $pedidoDAO->atribuiNumero();
         ?>
 
+            <input type="hidden" value="<?php echo $item->getIdCarrinho() ?>" name="idCarrinho">
+            <input type="hidden" value="<?php echo $_SESSION['id'] ?>" name="idUsuario">
+            <input type="hidden" value="<?php echo $vTotal ?>" name="total">
+            <input type="hidden" value="processando" name="situacao">
+
+            <div class="total">Total R$ <?php echo $vTotal ?> </div>
+
+            <button name="finalizar" value="finalizar>">Finalizar Compra</button>
 
 
-
-            <div>
-                <input type="submit" name="finalizar" value="finalizar" id="button" class="submit">
-            </div>
-
+            <?php if (isset($_POST["finalizar"])) {
+            // $pedidoDAO = new PedidoDAO();
+            // $pedido = new Pedido($_POST);
+            // $pedidoDAO->adicionaPedido($pedido, $_SESSION['id']);
+        }
+        ?>
         </form>
-    </div>
 
-    <div class="total">Total R$ <?php echo $vTotal ?> </div>
+    </div>
 
 </body>
 

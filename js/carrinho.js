@@ -1,9 +1,10 @@
 window.onload = init;
-function init(){
-    atualizarQuantidade();
-    }
 
-function atualizarQuantidade(){
+function init() {
+    atualizarQuantidade();
+}
+
+function atualizarQuantidade() {
     var incrementButtons = document.querySelectorAll('.increment');
     var decrementButtons = document.querySelectorAll('.decrement');
 
@@ -13,10 +14,11 @@ function atualizarQuantidade(){
             var Valuemax = button.parentElement.querySelector('label').textContent;
             if (input.value === "") {
                 input.value = parseInt(input.placeholder) + 1;
-            }else{
-            if (parseInt(input.value) < parseInt(Valuemax)) {
-                input.value = parseInt(input.value) + 1;
-            }}
+            } else {
+                if (parseInt(input.value) < parseInt(Valuemax)) {
+                    input.value = parseInt(input.value) + 1;
+                }
+            }
         });
     });
 
@@ -25,10 +27,13 @@ function atualizarQuantidade(){
             var input = button.parentElement.querySelector('input[type="text"]');
             if (input.value === "") {
                 input.value = parseInt(input.placeholder) - 1;
-            }else{
-            if (parseInt(input.value) > 0) {
-                input.value = parseInt(input.value) - 1;
-            }}
+            } else {
+                if (parseInt(input.value) > 1) { 
+                    input.value = parseInt(input.value) - 1;
+                } else {
+                    input.value = 1;
+                }
+            }
         });
     });
 }

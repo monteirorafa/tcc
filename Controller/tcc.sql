@@ -31,10 +31,20 @@ SET time_zone = "+00:00";
 CREATE TABLE `carrinho` (
   `id` int(11) NOT NULL,
   `idUsuario` int(11) NOT NULL,
-  `idProduto` int(11) NOT NULL,
-  `vInicial` double(10,2) NOT NULL,
-  `quantidade` int(11) NOT NULL,
   `situacao` varchar(150) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `itemcarrinho`
+--
+
+CREATE TABLE `itemcarrinho` (
+  `id` int(11) NOT NULL,
+  `idCarrinho` int(11) NOT NULL,
+  `idProduto` int(11) NOT NULL,
+  `quantidade` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -47,10 +57,8 @@ CREATE TABLE `pedidos` (
   `id` int(11) NOT NULL,
   `idCarrinho` int(11) NOT NULL,
   `idUsuario` int(11) NOT NULL,
-  `idProduto` int(11) NOT NULL,
-  `numero` float NOT NULL,
-  `criacao` datetime NOT NULL,
-  `valor` double(10,2) NOT NULL,
+  `criado` datetime NOT NULL,
+  `total` double(10,2) NOT NULL,
   `pagamento` varchar(150) NOT NULL,
   `entrega` varchar(150) NOT NULL,
   `situacao` varchar(150) NOT NULL
@@ -112,7 +120,14 @@ INSERT INTO `usuario` (`id`, `cpf`, `nome`, `email`, `cidade`, `endereco`, `nume
 --
 ALTER TABLE `carrinho`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `FKidUsuario` (`idUsuario`),
+  ADD KEY `FKidUsuario` (`idUsuario`);
+
+--
+-- Índices para tabela `itemcarrinho`
+--
+ALTER TABLE `itemcarrinho`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FKidCarrinho` (`idCarrinho`),
   ADD KEY `FKidProduto` (`idProduto`);
 
 --
@@ -121,8 +136,7 @@ ALTER TABLE `carrinho`
 ALTER TABLE `pedido`
   ADD PRIMARY KEY (`id`),
   ADD KEY `FKidCarrinho` (`idCarrinho`),
-  ADD KEY `FKidUsuario` (`idUsuario`),
-  ADD KEY `FKidProduto` (`idProduto`);
+  ADD KEY `FKidUsuario` (`idUsuario`);
 
 --
 -- Índices para tabela `produto`
@@ -144,6 +158,12 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de tabela `carrinho`
 --
 ALTER TABLE `carrinho`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `itemcarrinho`
+--
+ALTER TABLE `itemcarrinho`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
@@ -172,16 +192,21 @@ ALTER TABLE `usuario`
 -- Limitadores para a tabela `carrinho`
 --
 ALTER TABLE `carrinho`
-  ADD CONSTRAINT `carrinhoFKidProduto` FOREIGN KEY (`idProduto`) REFERENCES `produto` (`id`),
   ADD CONSTRAINT `carrinhoFKidUsuario` FOREIGN KEY (`idUsuario`) REFERENCES `usuario` (`id`);
+
+--
+-- Limitadores para a tabela `itemcarrinho`
+--
+ALTER TABLE `itemcarrinho`
+  ADD CONSTRAINT `itemFKidCarrinho` FOREIGN KEY (`idCarrinho`) REFERENCES `carrinho` (`id`),
+  ADD CONSTRAINT `itemFKidProduto` FOREIGN KEY (`idProduto`) REFERENCES `produto` (`id`);
 
 --
 -- Limitadores para a tabela `pedido`
 --
 ALTER TABLE `pedido`
   ADD CONSTRAINT `pedidoFKidCarrinho` FOREIGN KEY (`idCarrinho`) REFERENCES `carrinho` (`id`),
-  ADD CONSTRAINT `pedidoFKidUsuario` FOREIGN KEY (`idUsuario`) REFERENCES `usuario` (`id`),
-  ADD CONSTRAINT `pedidoFKidProduto` FOREIGN KEY (`idProduto`) REFERENCES `produto` (`id`);
+  ADD CONSTRAINT `pedidoFKidUsuario` FOREIGN KEY (`idUsuario`) REFERENCES `usuario` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

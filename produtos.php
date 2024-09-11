@@ -84,7 +84,7 @@ include_once __DIR__ . '../Controller/CarrinhoDAO.php';
 
             if (isset($_POST["carrinho"])) {
                 $carrinhoDAO = new CarrinhoDAO();
-                $carrinhoDAO->adicionaCarrinho($_POST["carrinho"]);
+                $carrinhoDAO->adicionaCarrinho($_POST["carrinho"], $_SESSION['id']);
             }
             ?>
 
