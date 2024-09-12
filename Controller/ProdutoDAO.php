@@ -48,6 +48,35 @@ class ProdutoDAO
         return $produto;
     }
 
+    public function produtosCarrinho()
+    {
+        $consultaItens = $this->conexao->prepare("SELECT p.* FROM usuario u, carrinho c, itemcarrinho i, produto p WHERE u.id = c.idUsuario AND c.id = i.idCarrinho AND p.id = i.idProduto AND u.id = :id AND c.situacao = :situacao");
+        $consultaItens->bindValue(":id", $_SESSION['id']);
+        $consultaItens->bindValue(":situacao", "ativo");
+        $consultaItens->execute();
+        $produto = $consultaItens->fetchAll(PDO::FETCH_CLASS, Produto::class);
+        return $produto;
+    }
+
+    public function produtosCarrinhoInativo()
+    {
+        $consultaItens = $this->conexao->prepare("SELECT p.* FROM usuario u, carrinho c, itemcarrinho i, produto p WHERE u.id = c.idUsuario AND c.id = i.idCarrinho AND p.id = i.idProduto AND u.id = :id AND c.situacao = :situacao");
+        $consultaItens->bindValue(":id", $_SESSION['id']);
+        $consultaItens->bindValue(":situacao", "inativo");
+        $consultaItens->execute();
+        $produto = $consultaItens->fetchAll(PDO::FETCH_CLASS, Produto::class);
+        return $produto;
+    }
+
+    public function todosInativo()
+    {
+        $consultaItens = $this->conexao->prepare("SELECT p.* FROM usuario u, carrinho c, itemcarrinho i, produto p WHERE u.id = c.idUsuario AND c.id = i.idCarrinho AND p.id = i.idProduto AND c.situacao = :situacao");
+        $consultaItens->bindValue(":situacao", "inativo");
+        $consultaItens->execute();
+        $produto = $consultaItens->fetchAll(PDO::FETCH_CLASS, Produto::class);
+        return $produto;
+    }
+
     public function alteraProduto(Produto $produto)
     {
         $pstmt = $this->conexao->prepare("UPDATE produto SET nome=:nome, categoria=:categoria, valor=:valor, quantidade=:quantidade, descricao=:descricao, imagem=:imagem, criado=:criado, atualizado=CURRENT_TIMESTAMP WHERE id=:id");

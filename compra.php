@@ -28,7 +28,7 @@ include_once __DIR__ . '../Controller/PedidoDAO.php';
 <body>
 
     <div class="container">
-        <form action="index.php" method="post">
+        <form action="compra.php" method="post">
             <h1 class="titulo">Confira seus dados</h1>
             <div class="card">
                 <div class="card-content row">
@@ -84,13 +84,15 @@ include_once __DIR__ . '../Controller/PedidoDAO.php';
             </div>
 
             <?php
-
+                        $produtoDAO = new ProdutoDAO();
                         $carrinhoDAO = new CarrinhoDAO();
-                        $objetoCarrinho = $carrinhoDAO->consultaCarrinho();
+                        $objetoCarrinho = $produtoDAO->produtosCarrinho();
                         $carrinhoID = $carrinhoDAO->consultaCarrinhoId();
+
                         $itemDAO = new ItemCarrinhoDAO();
                         $objetoItem = $itemDAO->consultaItem($carrinhoID);
                         $itensPorProduto = [];
+
                         foreach ($objetoItem as $itemData) {
                             $item = new ItemCarrinho($itemData);
                             $produtoId = $item->getIdProduto();
@@ -140,9 +142,9 @@ include_once __DIR__ . '../Controller/PedidoDAO.php';
 
 
             <?php if (isset($_POST["finalizar"])) {
-            // $pedidoDAO = new PedidoDAO();
-            // $pedido = new Pedido($_POST);
-            // $pedidoDAO->adicionaPedido($pedido, $_SESSION['id']);
+            $pedidoDAO = new PedidoDAO();
+            $pedido = new Pedido($_POST);
+            $pedidoDAO->adicionaPedido($pedido, $_SESSION['id']);
         }
         ?>
         </form>

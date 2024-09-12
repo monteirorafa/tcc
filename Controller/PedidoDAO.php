@@ -1,5 +1,7 @@
 <?php
-
+if (!isset($_SESSION['id'])) {
+    session_start();
+}
 include_once __DIR__ . '/../Conexao/Conexao.php';
 include_once __DIR__ . '/../Controller/Pedido.php';
 
@@ -45,8 +47,18 @@ class PedidoDAO
             }
 
             echo "<script> alert('Pedido realizado.');</script>";
+            header('Location: index.php');
         } else {
             echo "Erro " . $pstmt . "<br>" . $this->conexao->errorInfo();
         }
+    }
+
+    public function consultaPedido(array $idCarrinho)
+    {
+        $arrayIds = implode(',', array_fill(0, count($idCarrinho), '?'));
+        $pstmt = $this->conexao->prepare("SELECT * FROM pedidos WHERE idCarrinho IN ($arrayIds)");
+        $pstmt->execute(array_values($idCarrinho));
+        $lista = $pstmt->fetchAll(PDO::FETCH_CLASS, Pedido::class);
+        return $lista;
     }
 }

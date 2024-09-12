@@ -100,4 +100,13 @@ class UsuarioDAO
         $usuario = $pstmt->fetchAll(PDO::FETCH_CLASS, Usuario::class);
         return $usuario;
     }
+
+    public function consultaUsuario($idUsuario)
+    {
+        $pstmt = $this->conexao->prepare("SELECT * FROM usuario WHERE id = :id");
+        $pstmt->bindValue(":id", $idUsuario);
+        $pstmt->execute();
+        $usuario = $pstmt->fetchAll(PDO::FETCH_CLASS, Usuario::class);
+        return $usuario;
+    }
 }

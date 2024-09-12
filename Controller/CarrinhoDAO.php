@@ -58,29 +58,6 @@ class CarrinhoDAO
         }
     }
 
-
-    /*Adiciona ao Carrinho
-        > Criar carrinho com id do usuário caso não exista (statusAtivo=0)
-        > Caso exista adicionar produto ao mesmo id do carrinho (statusAtivo>=1)
-
-        Remover do Carrinho
-        > Se remover um item mas existir outros só remove o item (statusAtivo>=1)
-        > Se remover item e carrinho ficar vazio (statusAtivo=0)
-
-        Compra finalizada
-        > Todos os itens do id do usuário se tornam inativos
-        > Trigger de atualização de estoque*/
-
-    public function consultaCarrinho()
-    {
-        $consultaItens = $this->conexao->prepare("SELECT p.* FROM usuario u, carrinho c, itemcarrinho i, produto p WHERE u.id = c.idUsuario AND c.id = i.idCarrinho AND p.id = i.idProduto AND u.id = :id AND c.situacao = :situacao");
-        $consultaItens->bindValue(":id", $_SESSION['id']);
-        $consultaItens->bindValue(":situacao", "ativo");
-        $consultaItens->execute();
-        $produto = $consultaItens->fetchAll(PDO::FETCH_CLASS, Produto::class);
-        return $produto;
-    }
-
     public function consultaCarrinhoId()
     {
         $consultaID = $this->conexao->prepare("SELECT c.id FROM usuario u, carrinho c, itemcarrinho i, produto p WHERE u.id = c.idUsuario AND c.id = i.idCarrinho AND p.id = i.idProduto AND u.id = :id AND c.situacao = :situacao");
@@ -89,6 +66,25 @@ class CarrinhoDAO
         $consultaID->execute();
         $id = $consultaID->fetch(PDO::FETCH_ASSOC);
         return (int) $id['id'];
+    }
+
+    public function consultaCarrinhoInativo()
+    {
+        $consultaID = $this->conexao->prepare("SELECT DISTINCT c.id FROM usuario u, carrinho c, itemcarrinho i, produto p WHERE u.id = c.idUsuario AND c.id = i.idCarrinho AND p.id = i.idProduto AND u.id = :id AND c.situacao = :situacao");
+        $consultaID->bindValue(":id", $_SESSION['id']);
+        $consultaID->bindValue(":situacao", "inativo");
+        $consultaID->execute();
+        $id = $consultaID->fetchAll(PDO::FETCH_ASSOC);
+        return $id;
+    }
+
+    public function consultaTodosCarrinhoInativo()
+    {
+        $consultaID = $this->conexao->prepare("SELECT DISTINCT c.id FROM usuario u, carrinho c, itemcarrinho i, produto p WHERE u.id = c.idUsuario AND c.id = i.idCarrinho AND p.id = i.idProduto AND c.situacao = :situacao");
+        $consultaID->bindValue(":situacao", "inativo");
+        $consultaID->execute();
+        $id = $consultaID->fetchAll(PDO::FETCH_ASSOC);
+        return $id;
     }
 
     public function editarCarrinho(ItemCarrinho $itemcarrinho)
