@@ -50,6 +50,20 @@ CREATE TABLE `itemcarrinho` (
 -- --------------------------------------------------------
 
 --
+-- Estrutura da tabela `live`
+--
+
+CREATE TABLE `live` (
+  `id` int(11) NOT NULL,
+  `idUsuario` int(11) NOT NULL,
+  `idVIdeo` varchar(150) DEFAULT NULL,
+  `plataforma` varchar(150) DEFAULT NULL,
+  `live` tinyint(1) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura da tabela `pedido`
 --
 
@@ -131,6 +145,13 @@ ALTER TABLE `itemcarrinho`
   ADD KEY `FKidProduto` (`idProduto`);
 
 --
+-- Índices para tabela `itemcarrinho`
+--
+ALTER TABLE `live`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FKidVideo` (`idVideo`);
+
+--
 -- Índices para tabela `pedido`
 --
 ALTER TABLE `pedido`
@@ -167,6 +188,12 @@ ALTER TABLE `itemcarrinho`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT de tabela `live`
+--
+ALTER TABLE `live`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de tabela `pedido`
 --
 ALTER TABLE `pedido`
@@ -200,6 +227,12 @@ ALTER TABLE `carrinho`
 ALTER TABLE `itemcarrinho`
   ADD CONSTRAINT `itemFKidCarrinho` FOREIGN KEY (`idCarrinho`) REFERENCES `carrinho` (`id`),
   ADD CONSTRAINT `itemFKidProduto` FOREIGN KEY (`idProduto`) REFERENCES `produto` (`id`);
+
+--
+-- Limitadores para a tabela `live`
+--
+ALTER TABLE `live`
+  ADD CONSTRAINT `liveFKidUsuario` FOREIGN KEY (`idUsuario`) REFERENCES `usuario` (`id`);
 
 --
 -- Limitadores para a tabela `pedido`

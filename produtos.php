@@ -31,6 +31,7 @@ include_once __DIR__ . '../Controller/CarrinhoDAO.php';
         ?>
     </div>
 
+
     <?php
     $cont = 0;
     $produtoDAO = new ProdutoDAO();
@@ -48,35 +49,35 @@ include_once __DIR__ . '../Controller/CarrinhoDAO.php';
                 };
             ?>
 
-            <div class="col s12 m6 l3">
-                <div class="card product-card">
-                    <div class="card-image">
-                        <img class="custom-image" src="<?php echo $produto->getImagem() ?>">
-                    </div>
-                    <div class="card-content">
-                        <p class="product-price" id="prod"> <?php echo $produto->getCategoria(); ?> </p>
-                        <p class="product-price" id="prod"> <?php echo $produto->getNome(); ?> </p>
-                        <p class="product-price"> <?php echo $produto->getDescricao(); ?> </p>
-                        <div class="product-info">
-                            <p name="valor" class="product-price" value="<?php echo $produto->getValor() ?>"
-                                title="<?php echo $produto->getValor() ?>">R$ <?php echo $produto->getValor() ?>
-                            </p>
+                <div class="col s12 m6 l3">
+                    <div class="card product-card">
+                        <div class="card-image">
+                            <img class="custom-image" src="<?php echo $produto->getImagem() ?>">
                         </div>
+                        <div class="card-content">
+                            <p class="product-price" id="prod"> <?php echo $produto->getCategoria(); ?> </p>
+                            <p class="product-price" id="prod"> <?php echo $produto->getNome(); ?> </p>
+                            <p class="product-price"> <?php echo $produto->getDescricao(); ?> </p>
+                            <div class="product-info">
+                                <p name="valor" class="product-price" value="<?php echo $produto->getValor() ?>"
+                                    title="<?php echo $produto->getValor() ?>">R$ <?php echo $produto->getValor() ?>
+                                </p>
+                            </div>
 
-                        <form method="post" action="produtos.php">
-                            <button name="carrinho" value="<?php echo $produto->getId() ?>">Adicionar ao
-                                Carrinho</button>
-                        </form>
+                            <form method="post" action="produtos.php">
+                                <button name="carrinho" value="<?php echo $produto->getId() ?>">Adicionar ao
+                                    Carrinho</button>
+                            </form>
 
-                        <?php if ($adm) { ?>
-                        <form method="post" action="alteraProduto.php">
-                            <button name="altera" value="<?php echo $produto->getId() ?>">Editar Produto</button>
-                        </form>
-                        <?php }; ?>
+                            <?php if ($adm) { ?>
+                                <form method="post" action="alteraProduto.php">
+                                    <button name="altera" value="<?php echo $produto->getId() ?>">Editar Produto</button>
+                                </form>
+                            <?php }; ?>
 
+                        </div>
                     </div>
                 </div>
-            </div>
 
             <?php
                 $cont++;

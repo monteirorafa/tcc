@@ -7,10 +7,11 @@ class Menu
     {
         $adm = isset($_SESSION['adm']) && $_SESSION['adm'] == 1;
         if ($adm) {
-            echo "<li><a href='#.php'>Live</a></li>";
-            echo "<li><a href='#.php'>Parar Live</a></li>";
+            echo "<li><a href='live.php'>Live</a></li>";
+            echo "<li><a href='parar.php'>Parar Live</a></li>";
             echo "<li><a href='minhascompras.php'>Minhas Vendas</a></li>";
             echo "<li><a href='Controller/Login.php?function=logout'>Sair</a></li>";
+            echo "<script src='js/live.js'></script>";
         } elseif (isset($_SESSION['sessaoID'])) {
             echo "<li><a href='minhascompras.php'>Minhas Compras</a></li>";
             echo "<li><a href='carrinho.php'>Carrinho</a></li>";
@@ -25,8 +26,8 @@ class Menu
     {
         $adm = isset($_SESSION['adm']) && $_SESSION['adm'] == 1;
         if ($adm) {
-            echo "<li><a href='#.php'><i class='material-icons left grey-text'>live_tv</i>Live</a></li>";
-            echo "<li><a href='#.php'><i class='material-icons left grey-text'>stop_screen_share</i>Parar
+            echo "<li><a href='live.php'><i class='material-icons left grey-text'>live_tv</i>Live</a></li>";
+            echo "<li><a href='parar.php'><i class='material-icons left grey-text'>stop_screen_share</i>Parar
             Live</a></li>";
             echo "<li><a href='minhascompras.php'><i class='material-icons left grey-text'>monetization_on</i>Minhas Vendas</a></li>";
             echo "<li><a href='Controller/Login.php?function=logout'><i class='material-icons left grey-text'>keyboard_backspace</i>Sair</a></li>";
