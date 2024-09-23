@@ -154,7 +154,7 @@ ALTER TABLE `live`
 --
 -- Índices para tabela `pedido`
 --
-ALTER TABLE `pedido`
+ALTER TABLE `pedidos`
   ADD PRIMARY KEY (`id`),
   ADD KEY `FKidCarrinho` (`idCarrinho`),
   ADD KEY `FKidUsuario` (`idUsuario`);
@@ -196,7 +196,7 @@ ALTER TABLE `live`
 --
 -- AUTO_INCREMENT de tabela `pedido`
 --
-ALTER TABLE `pedido`
+ALTER TABLE `pedidos`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
@@ -237,7 +237,7 @@ ALTER TABLE `live`
 --
 -- Limitadores para a tabela `pedido`
 --
-ALTER TABLE `pedido`
+ALTER TABLE `pedidos`
   ADD CONSTRAINT `pedidoFKidCarrinho` FOREIGN KEY (`idCarrinho`) REFERENCES `carrinho` (`id`),
   ADD CONSTRAINT `pedidoFKidUsuario` FOREIGN KEY (`idUsuario`) REFERENCES `usuario` (`id`);
 COMMIT;

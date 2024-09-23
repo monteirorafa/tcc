@@ -1,5 +1,5 @@
 <?php
-if (!isset($_SESSION['id'])) {
+if (!isset($_SESSION)) {
     session_start();
 }
 include_once __DIR__ . '/../Conexao/Conexao.php';
