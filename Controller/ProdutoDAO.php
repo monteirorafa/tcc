@@ -96,4 +96,12 @@ class ProdutoDAO
             echo "Erro " . $pstmt . "<br>" . $this->conexao->errorInfo();
         }
     }
+
+    public function randomIndex()
+    {
+        $pstmt = $this->conexao->prepare("SELECT * FROM produto ORDER BY RAND() LIMIT 8");
+        $pstmt->execute();
+        $produto = $pstmt->fetchAll(PDO::FETCH_CLASS, Produto::class);
+        return $produto;
+    }
 }

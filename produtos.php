@@ -14,23 +14,29 @@ include_once __DIR__ . '../Controller/CarrinhoDAO.php';
 <html lang="en">
 
 <head>
+    <title>Produtos</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Produtos</title>
+
+    <!-- Materialize JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
     <link rel="stylesheet" href="css/produtos.css">
+    <script src="js/produtos.js"></script>
 </head>
 
 <body>
     <div class="cabecalho">
         <h1 class="titulo">Produtos</h1>
+
         <?php
         $adm = isset($_SESSION['adm']) && $_SESSION['adm'] == 1;
         if ($adm) {
             echo "<a href='cadastroProduto.php' class='button'>Cadastrar Produto</a>";
         }
         ?>
-    </div>
 
+    </div>
 
     <?php
     $cont = 0;
@@ -49,40 +55,66 @@ include_once __DIR__ . '../Controller/CarrinhoDAO.php';
                 };
             ?>
 
-                <div class="col s12 m6 l3">
-                    <div class="card product-card">
-                        <div class="card-image">
-                            <img class="custom-image" src="<?php echo $produto->getImagem() ?>">
+            <div class="col s12 m3">
+                <div class="card">
+
+                    <div class="card-image">
+                        <img class="custom-image" src="<?php echo $produto->getImagem() ?>" alt="">
+
+                        <?php
+                            $adm = isset($_SESSION['adm']) && $_SESSION['adm'] == 1;
+                            if ($adm) { ?>
+                        <a class="btn-floating halfway-fab waves-effect waves-light indigo darken-4 tooltipped custom-tooltip"
+                            id="submitBtn-<?php echo $produto->getId(); ?>" data-position="left"
+                            data-tooltip="Alterar Produto"><i class="material-icons">edit</i></a>
+
+                        <?php } else { ?>
+                        <a class="btn-floating halfway-fab waves-effect waves-light indigo darken-4 tooltipped custom-tooltip"
+                            id="submitBtn-<?php echo $produto->getId(); ?>" data-position="left"
+                            data-tooltip="Adicionar ao Carrinho"
+                            onclick="M.toast({html: 'Item adicionado ao carrinho'})"><i
+                                class="material-icons">add</i></a>
+                        <?php }; ?>
+
+                    </div>
+
+                    <div class="card-content">
+                        <div class="nome">
+                            <span class="card-title"><?php echo $produto->getNome(); ?>
+                                <span class="categoria">(<?php echo $produto->getCategoria(); ?>)</span>
+                            </span>
                         </div>
-                        <div class="card-content">
-                            <p class="product-price" id="prod"> <?php echo $produto->getCategoria(); ?> </p>
-                            <p class="product-price" id="prod"> <?php echo $produto->getNome(); ?> </p>
-                            <p class="product-price"> <?php echo $produto->getDescricao(); ?> </p>
-                            <div class="product-info">
-                                <p name="valor" class="product-price" value="<?php echo $produto->getValor() ?>"
-                                    title="<?php echo $produto->getValor() ?>">R$ <?php echo $produto->getValor() ?>
-                                </p>
-                            </div>
+                        <p name="valor" class="product-price" value="<?php echo $produto->getValor(); ?>"
+                            title="<?php echo $produto->getValor(); ?>">R$ <?php echo $produto->getValor(); ?>
+                        </p>
+                        <p class="descricao"><?php echo $produto->getDescricao(); ?></p>
 
-                            <form method="post" action="produtos.php">
-                                <button name="carrinho" value="<?php echo $produto->getId() ?>">Adicionar ao
-                                    Carrinho</button>
-                            </form>
+                        <?php
+                            if ($adm) { ?>
 
-                            <?php if ($adm) { ?>
-                                <form method="post" action="alteraProduto.php">
-                                    <button name="altera" value="<?php echo $produto->getId() ?>">Editar Produto</button>
-                                </form>
-                            <?php }; ?>
+                        <form method="post" action="alteraProduto.php"
+                            id="productForm-<?php echo $produto->getId(); ?>">
+                            <input type="hidden" name="altera" value="<?php echo $produto->getId(); ?>">
+                        </form>
 
-                        </div>
+                        <?php } else { ?>
+                        <form method="post" action="produtos.php" id="productForm-<?php echo $produto->getId(); ?>">
+                            <input type="hidden" name="carrinho" value="<?php echo $produto->getId(); ?>">
+                        </form>
+                        <?php }; ?>
+
+
+                        <script>
+
+                        </script>
+
                     </div>
                 </div>
+            </div>
 
             <?php
                 $cont++;
             }
-
             if (isset($_POST["carrinho"])) {
                 $carrinhoDAO = new CarrinhoDAO();
                 $carrinhoDAO->adicionaCarrinho($_POST["carrinho"], $_SESSION['id']);
@@ -91,7 +123,6 @@ include_once __DIR__ . '../Controller/CarrinhoDAO.php';
 
         </div>
     </div>
-
 </body>
 
 </html>

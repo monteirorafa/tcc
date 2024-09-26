@@ -4,6 +4,10 @@ include_once __DIR__ . '/menu.php';
 include_once __DIR__ . '/Conexao/Conexao.php';
 include_once __DIR__ . '../Controller/Live.php';
 include_once __DIR__ . '../Controller/LiveDAO.php';
+include_once __DIR__ . '../Controller/Produto.php';
+include_once __DIR__ . '../Controller/ProdutoDAO.php';
+include_once __DIR__ . '../Controller/Carrinho.php';
+include_once __DIR__ . '../Controller/CarrinhoDAO.php';
 ?>
 
 <!DOCTYPE html>
@@ -13,6 +17,7 @@ include_once __DIR__ . '../Controller/LiveDAO.php';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Página Inicial</title>
+    <link rel="stylesheet" href="css/produtos.css">
 </head>
 
 <body>
@@ -23,8 +28,10 @@ include_once __DIR__ . '../Controller/LiveDAO.php';
         $live = new LiveDAO();
         $select = $live->selectLive();
         foreach ($select as $objetoLive) {
-            if ($objetoLive->getPlataforma() == "youtube") { ?>
+            if ($objetoLive->getLive == 1) {
+                echo "<h3>Estamos Ao Vivo</h3>";
 
+                if ($objetoLive->getPlataforma() == "youtube") { ?>
         <div class="video-container">
             <iframe width="560" height="315"
                 src="https://www.youtube.com/embed/<?php echo $objetoLive->getIdVideo() ?>?autoplay=1&mute=1"
@@ -38,7 +45,7 @@ include_once __DIR__ . '../Controller/LiveDAO.php';
         </div>
 
         <?php
-            } elseif ($objetoLive->getPlataforma() == "facebook") { ?>
+                } elseif ($objetoLive->getPlataforma() == "facebook") { ?>
 
         <div class="video-container">
             <iframe
@@ -57,7 +64,7 @@ include_once __DIR__ . '../Controller/LiveDAO.php';
             data-width="1000" data-num-posts="10"></div>
 
         <?php
-            } elseif ($objetoLive->getPlataforma() == "instagram") { ?>
+                } elseif ($objetoLive->getPlataforma() == "instagram") { ?>
 
         <blockquote class="instagram-media" data-instgrm-captioned
             data-instgrm-permalink="https://www.instagram.com/reel/<?php echo $objetoLive->getIdVideo() ?>/?utm_source=ig_embed&amp;utm_campaign=loading"
@@ -152,12 +159,82 @@ include_once __DIR__ . '../Controller/LiveDAO.php';
         </blockquote>
         <script async src="//www.instagram.com/embed.js"></script>
 
-
         <?php }
+            }
         }
         ?>
 
     </div>
+
+    <?php
+    $cont = 0;
+    $produtoDAO = new ProdutoDAO();
+    $objetoProduto = $produtoDAO->randomIndex();
+    ?>
+
+    <div class="container">
+        <div class="row">
+
+            <?php
+            foreach ($objetoProduto as $produto) {
+                $produto = new Produto($produto);
+                if ($cont % 4 === 0) {
+                    echo "</div><div class='row'>";
+                };
+            ?>
+
+            <div class="col s12 m6 l3">
+                <div class="card product-card">
+                    <div class="card-image">
+                        <img class="custom-image" src="<?php echo $produto->getImagem() ?>">
+                    </div>
+                    <div class="card-content">
+                        <p class="product-price" id="prod"> <?php echo $produto->getCategoria(); ?> </p>
+                        <p class="product-price" id="prod"> <?php echo $produto->getNome(); ?> </p>
+                        <p class="product-price"> <?php echo $produto->getDescricao(); ?> </p>
+                        <div class="product-info">
+                            <p name="valor" class="product-price" value="<?php echo $produto->getValor() ?>"
+                                title="<?php echo $produto->getValor() ?>">R$ <?php echo $produto->getValor() ?>
+                            </p>
+                        </div>
+
+                        <?php
+                            $adm = isset($_SESSION['adm']) && $_SESSION['adm'] == 1;
+                            if ($adm) { ?>
+                        <form method="post" action="alteraProduto.php">
+                            <button name="altera" value="<?php echo $produto->getId() ?>">Editar Produto</button>
+                        </form>
+                        <?php } else { ?>
+
+                        <form method="post" action="produtos.php">
+                            <button name="carrinho" value="<?php echo $produto->getId() ?>">Adicionar ao
+                                Carrinho</button>
+                        </form>
+                        <?php }; ?>
+
+                    </div>
+                </div>
+            </div>
+
+            <?php
+                $cont++;
+            }
+
+            if (isset($_POST["carrinho"])) {
+                $carrinhoDAO = new CarrinhoDAO();
+                $carrinhoDAO->adicionaCarrinho($_POST["carrinho"], $_SESSION['id']);
+            }
+            ?>
+
+
+
+        </div>
+    </div>
+
+    <div>
+        <a href="produtos.php">Ver Mais...</a>
+    </div>
+
 </body>
 
 

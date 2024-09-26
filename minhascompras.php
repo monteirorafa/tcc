@@ -22,13 +22,11 @@ include_once __DIR__ . '../Controller/PedidoDAO.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Minhas Compras</title>
 </head>
 
 <body>
 
     <div class="container">
-        <h1 class="titulo">Minhas Compras</h1>
 
         <?php
         $adm = isset($_SESSION['adm']) && $_SESSION['adm'] == 1;
@@ -38,9 +36,13 @@ include_once __DIR__ . '../Controller/PedidoDAO.php';
         if ($adm) {
             $objetoCarrinho = $produtoDAO->todosInativo();
             $carrinhoID = $carrinhoDAO->consultaTodosCarrinhoInativo();
+            echo "<title>Minhas Vendas</title>";
+            echo "<h1 class='titulo'>Minhas Vendas</h1>";
         } else {
             $objetoCarrinho = $produtoDAO->produtosCarrinhoInativo();
             $carrinhoID = $carrinhoDAO->consultaCarrinhoInativo();
+            echo "<title>Minhas Compras</title>";
+            echo "<h1 class='titulo'>Minhas Compras</h1>";
         }
 
         foreach ($carrinhoID as $carrinho) {
@@ -68,18 +70,18 @@ include_once __DIR__ . '../Controller/PedidoDAO.php';
                     foreach ($usuarios as $usuario) {
         ?>
 
-                        <ul class="collapsible">
-                            <li>
-                                <div class="collapsible-header"><i class="material-icons">directions_bus</i>Pedido Número:
-                                    <?php echo $pedido->getId() ?>
-                                    <span>Valor Total: <?php echo $pedido->getTotal() ?></span>
-                                    <span>Comprador: <?php echo $usuario->getNome() ?></span>
-                                    <span>Clique para detalhes</span>
-                                </div>
+        <ul class="collapsible">
+            <li>
+                <div class="collapsible-header"><i class="material-icons">directions_bus</i>Pedido Número:
+                    <?php echo $pedido->getId() ?>
+                    <span>Valor Total: <?php echo $pedido->getTotal() ?></span>
+                    <span>Comprador: <?php echo $usuario->getNome() ?></span>
+                    <span>Clique para detalhes</span>
+                </div>
 
-                                <div class="collapsible-body">
+                <div class="collapsible-body">
 
-                                    <?php
+                    <?php
                                     foreach ($objetoCarrinho as $produtoData) {
                                         $produto = new Produto($produtoData);
                                         $produtoId = $produto->getId();
@@ -87,55 +89,55 @@ include_once __DIR__ . '../Controller/PedidoDAO.php';
                                             foreach ($itensPorProduto[$produtoId] as $item) {
                                     ?>
 
-                                                <ul class="collection">
-                                                    <li class="collection-item avatar">
-                                                        <img src="<?php echo $produto->getImagem() ?>" alt="" class="circle">
-                                                        <span class="title"><?php echo $produto->getNome() ?></span>
-                                                        <p><?php echo $produto->getDescricao() ?><br>
-                                                            R$: <?php echo $produto->getValor() ?> <br>
-                                                            <?php echo $item->getQuantidade() . " unidades" ?>
-                                                        </p>
-                                                        <p class="secondary-content">Valor total deste item: R$
-                                                            <?php echo $pTotal = $produto->getValor() * $item->getQuantidade(); ?></p>
-                                                    </li>
-                                                </ul>
+                    <ul class="collection">
+                        <li class="collection-item avatar">
+                            <img src="<?php echo $produto->getImagem() ?>" alt="" class="circle">
+                            <span class="title"><?php echo $produto->getNome() ?></span>
+                            <p><?php echo $produto->getDescricao() ?><br>
+                                R$: <?php echo $produto->getValor() ?> <br>
+                                <?php echo $item->getQuantidade() . " unidades" ?>
+                            </p>
+                            <p class="secondary-content">Valor total deste item: R$
+                                <?php echo $pTotal = $produto->getValor() * $item->getQuantidade(); ?></p>
+                        </li>
+                    </ul>
 
-                                    <?php
+                    <?php
                                             }
                                         }
                                     }
                                     ?>
-                                    <p>Pedido realizado: <?php echo $pedido->getCriado() ?></p>
-                                    <p>Forma de pagamento: <?php echo $pedido->getPagamento() ?></p>
-                                    <p>Status da entrega: <?php echo $pedido->getSituacao() ?></p>
-                                    <p>Nome: <?php echo $usuario->getNome() ?></p>
-                                    <p>CPF: <?php echo $usuario->getCpf() ?></p>
-                                    <p>E-mail: <?php echo $usuario->getEmail() ?></p>
-                                    <p>Telefone: <?php echo $usuario->getTelefone() ?></p>
-                                    <p>Endereço: <?php echo $usuario->getEndereco() . ", " . $usuario->getNumero() ?></p>
-                                    <p>Cidade: <?php echo $usuario->getCidade() . "/" . $usuario->getEstado() ?></p>
-                                    <p>CEP: <?php echo $usuario->getCep() ?></p>
+                    <p>Pedido realizado: <?php echo $pedido->getCriado() ?></p>
+                    <p>Forma de pagamento: <?php echo $pedido->getPagamento() ?></p>
+                    <p>Status da entrega: <?php echo $pedido->getSituacao() ?></p>
+                    <p>Nome: <?php echo $usuario->getNome() ?></p>
+                    <p>CPF: <?php echo $usuario->getCpf() ?></p>
+                    <p>E-mail: <?php echo $usuario->getEmail() ?></p>
+                    <p>Telefone: <?php echo $usuario->getTelefone() ?></p>
+                    <p>Endereço: <?php echo $usuario->getEndereco() . ", " . $usuario->getNumero() ?></p>
+                    <p>Cidade: <?php echo $usuario->getCidade() . "/" . $usuario->getEstado() ?></p>
+                    <p>CEP: <?php echo $usuario->getCep() ?></p>
 
 
 
-                                </div>
-                            </li>
-                        </ul>
+                </div>
+            </li>
+        </ul>
 
-                    <?php
+        <?php
                     }
                 } else { ?>
-                    <ul class="collapsible">
-                        <li>
-                            <div class="collapsible-header"><i class="material-icons">directions_bus</i>Pedido Número:
-                                <?php echo $pedido->getId() ?>
-                                <span>Valor Total: <?php echo $pedido->getTotal() ?></span>
-                                <span>Clique para detalhes</span>
-                            </div>
+        <ul class="collapsible">
+            <li>
+                <div class="collapsible-header"><i class="material-icons">directions_bus</i>Pedido Número:
+                    <?php echo $pedido->getId() ?>
+                    <span>Valor Total: <?php echo $pedido->getTotal() ?></span>
+                    <span>Clique para detalhes</span>
+                </div>
 
-                            <div class="collapsible-body">
+                <div class="collapsible-body">
 
-                                <?php
+                    <?php
                                 foreach ($objetoCarrinho as $produtoData) {
                                     $produto = new Produto($produtoData);
                                     $produtoId = $produto->getId();
@@ -143,31 +145,31 @@ include_once __DIR__ . '../Controller/PedidoDAO.php';
                                         foreach ($itensPorProduto[$produtoId] as $item) {
                                 ?>
 
-                                            <ul class="collection">
-                                                <li class="collection-item avatar">
-                                                    <img src="<?php echo $produto->getImagem() ?>" alt="" class="circle">
-                                                    <span class="title"><?php echo $produto->getNome() ?></span>
-                                                    <p><?php echo $produto->getDescricao() ?><br>
-                                                        R$: <?php echo $produto->getValor() ?> <br>
-                                                        <?php echo $item->getQuantidade() . " unidades" ?>
-                                                    </p>
-                                                    <p class="secondary-content">Valor total deste item: R$
-                                                        <?php echo $pTotal = $produto->getValor() * $item->getQuantidade(); ?></p>
-                                                </li>
-                                            </ul>
+                    <ul class="collection">
+                        <li class="collection-item avatar">
+                            <img src="<?php echo $produto->getImagem() ?>" alt="" class="circle">
+                            <span class="title"><?php echo $produto->getNome() ?></span>
+                            <p><?php echo $produto->getDescricao() ?><br>
+                                R$: <?php echo $produto->getValor() ?> <br>
+                                <?php echo $item->getQuantidade() . " unidades" ?>
+                            </p>
+                            <p class="secondary-content">Valor total deste item: R$
+                                <?php echo $pTotal = $produto->getValor() * $item->getQuantidade(); ?></p>
+                        </li>
+                    </ul>
 
-                                <?php
+                    <?php
                                         }
                                     }
                                 }
                                 ?>
-                                <p>Pedido realizado: <?php echo $pedido->getCriado() ?></p>
-                                <p>Forma de pagamento: <?php echo $pedido->getPagamento() ?></p>
-                                <p>Status da entrega: <?php echo $pedido->getSituacao() ?></p>
+                    <p>Pedido realizado: <?php echo $pedido->getCriado() ?></p>
+                    <p>Forma de pagamento: <?php echo $pedido->getPagamento() ?></p>
+                    <p>Status da entrega: <?php echo $pedido->getSituacao() ?></p>
 
-                            </div>
-                        </li>
-                    </ul>
+                </div>
+            </li>
+        </ul>
         <?php }
             }
         }
