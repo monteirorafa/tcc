@@ -68,5 +68,11 @@ class LiveDAO
         return $lista;
     }
 
-    public function explodirVideo($url) {}
+    public function aoVivo()
+    {
+        $pstmt = $this->conexao->prepare("SELECT live FROM live WHERE live = 1");
+        $pstmt->execute();
+        $live = $pstmt->fetchColumn();
+        return (int) $live;
+    }
 }

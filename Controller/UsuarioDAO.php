@@ -109,4 +109,13 @@ class UsuarioDAO
         $usuario = $pstmt->fetchAll(PDO::FETCH_CLASS, Usuario::class);
         return $usuario;
     }
+
+    public function consultaNome()
+    {
+        $pstmt = $this->conexao->prepare("SELECT nome FROM usuario WHERE id = :id");
+        $pstmt->bindValue(":id", $_SESSION['id']);
+        $pstmt->execute();
+        $nome = $pstmt->fetchColumn();
+        return (string) $nome;
+    }
 }

@@ -32,7 +32,7 @@ include_once __DIR__ . '/Controller/Menu.php';
                 <div class="row">
 
                     <div class="col s2">
-                        <a href="#" class="brand-logo">Nome</a>
+                        <a href="index.php" class="brand-logo">Vitrine Virtual</a>
                         <a href="#" data-activates="mobile-menu" class="button-collapse"><i
                                 class="material-icons">menu</i></a>
                     </div>
