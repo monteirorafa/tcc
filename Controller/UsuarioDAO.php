@@ -118,4 +118,12 @@ class UsuarioDAO
         $nome = $pstmt->fetchColumn();
         return (string) $nome;
     }
+
+    public function selectUsuarios()
+    {
+        $pstmt = $this->conexao->prepare("SELECT * FROM usuario WHERE adm = 0 ORDER BY nome");
+        $pstmt->execute();
+        $usuario = $pstmt->fetchAll(PDO::FETCH_CLASS, Usuario::class);
+        return $usuario;
+    }
 }

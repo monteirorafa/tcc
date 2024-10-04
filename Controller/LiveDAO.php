@@ -73,6 +73,10 @@ class LiveDAO
         $pstmt = $this->conexao->prepare("SELECT live FROM live WHERE live = 1");
         $pstmt->execute();
         $live = $pstmt->fetchColumn();
-        return (int) $live;
+        if ($live) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

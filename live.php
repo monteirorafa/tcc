@@ -6,34 +6,62 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Live</title>
     <link rel="stylesheet" href="css/cadastro.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
 </head>
 
-<body>
-    <div class="box">
-        <form action="live.php" method="post">
-            <fieldset>
-                <legend>Iniciar uma Live</legend>
-                <div class="inputbox">
-                    <input type="text" name="idVideo" id="idVideo" class="inputUser" autocomplete="one-time-code"
-                        required>
-                    <label for="idVideo" class="labelInput">Link da sua Live</label>
+<body class="live">
+    <div class="row">
+        <div class="form-container">
+            <form action="live.php" method="post" class="form">
+                <div class="form-group">
+                    <label for="idVideo">Link da sua Live</label>
+                    <input type="text" name="idVideo" id="idVideo" autocomplete="one-time-code" required>
+                </div>
+                <div class="form-group">
+                    <br><label id="">Selecione a Plataforma</label>
+                </div>
+                <div class="radio-inputs">
+                    <label>
+                        <input class="radio-input" type="radio" id="plataforma" name="plataforma" value="youtube"
+                            required>
+                        <span class="radio-tile">
+                            <span class="radio-icon-youtube">
+                                <i class="fab fa-youtube"></i>
+                            </span>
+                            <span class="radio-label">YouTube</span>
+                        </span>
+                    </label>
+                    <label>
+                        <input class="radio-input" type="radio" id="plataforma" name="plataforma" value="facebook"
+                            required>
+                        <span class="radio-tile">
+                            <span class="radio-icon-facebook">
+                                <i class="fab fa-facebook"></i>
+                            </span>
+                            <span class="radio-label">Facebook</span>
+                        </span>
+                    </label>
+                    <label>
+                        <input class="radio-input" type="radio" id="plataforma" name="plataforma" value="instagram"
+                            required>
+                        <span class="radio-tile">
+                            <span class="radio-icon-instagram">
+                                <i class="fab fa-instagram"></i>
+                            </span>
+                            <span class="radio-label">Instagram</span>
+                        </span>
+                    </label>
                 </div>
 
-                <div class="inputbox">
-                    <input type="radio" id="plataforma" name="plataforma" value="youtube" required>
-                    <label for="youtube">Youtube</label><br>
-                    <input type="radio" id="plataforma" name="plataforma" value="facebook">
-                    <label for="facebook">Facebook</label><br>
-                    <input type="radio" id="plataforma" name="plataforma" value="instagram">
-                    <label for="instagram">Instagram</label>
+                <div class="button-container">
+                    <button name="Cadastrar" value="Cadastrar">Iniciar Live</button>
+                    <button type="button" class="button" onclick="window.location.href='index.php';">
+                        <span class="button-content">Voltar</span>
+                    </button>
                 </div>
 
-                <input type="submit" name="Cadastrar" value="Cadastrar" id="button" class="submit">
-
-                <a href="index.php" id="button" class="voltar">Voltar</a>
-
-            </fieldset>
-        </form>
+            </form>
+        </div>
     </div>
 
     <?php

@@ -23,7 +23,7 @@ include_once __DIR__ . '../Controller/ItemCarrinhoDAO.php';
     <script src="js/carrinho.js"></script>
 </head>
 
-<body>
+<main>
     <div class="cabecalho">
         <h1 class="titulo">Carrinho</h1>
     </div>
@@ -50,15 +50,15 @@ include_once __DIR__ . '../Controller/ItemCarrinhoDAO.php';
                 $itensPorProduto = [];
             ?>
 
-                <form action="compra.php" method="post">
-                    <div class="button">
-                        <button name="continua" id="continua" <?php if (empty($objetoItem)) {
+            <form action="compra.php" method="post">
+                <div class="button">
+                    <button name="continua" id="continua" <?php if (empty($objetoItem)) {
                                                                     echo "disabled";
                                                                 } ?>>Continuar</button>
-                    </div>
-                </form>
+                </div>
+            </form>
 
-                <?php
+            <?php
 
                 foreach ($objetoItem as $itemData) {
                     $item = new ItemCarrinho($itemData);
@@ -79,39 +79,39 @@ include_once __DIR__ . '../Controller/ItemCarrinhoDAO.php';
                             }
                 ?>
 
-                            <div class="col s12 m6 l3">
-                                <div class="card product-card">
-                                    <div class="card-image">
-                                        <img class="custom-image" src="<?php echo $produto->getImagem() ?>">
-                                    </div>
-                                    <div class="card-content">
-                                        <p class="product-price"> <?php echo $produto->getNome(); ?> </p>
-                                        <p class="product-price"> <?php echo $produto->getDescricao(); ?> </p>
-                                        <p class="product-price"> Quantidade: </p>
-                                        <p class="subTotal"> R$
-                                            <?php echo $pTotal = $produto->getValor() * $item->getQuantidade(); ?>
-                                        </p>
-                                        <form action="carrinho.php" method="post">
-                                            <div class="product-price">
-                                                <input type="button" name="diminuir" value="-" class="decrement">
-                                                <input type="text" name="quantidade" value=""
-                                                    placeholder="<?php echo $item->getQuantidade(); ?>" readonly>
-                                                <label id="Aux" hidden><?php echo $produto->getQuantidade() ?></label>
-                                                <?php if ($item->getQuantidade() < $produto->getQuantidade()) { ?>
-                                                    <input type="button" name="aumentar" value="+" class="increment">
-                                                <?php } else { ?>
-                                                    <input type="button" name="aumentar" value="+" class="increment" disabled>
-                                                <?php } ?>
-                                            </div>
-                                    </div>
-                                </div>
-
-                                <input type="hidden" value="<?php echo $item->getIdProduto(); ?>" name="idProduto">
-                                <input type="hidden" value="<?php echo $item->getIdCarrinho(); ?>" name="idCarrinho">
-                                <input type="submit" name="editar" value="editar" id="button" class="submit">
-                                <input type="submit" name="excluir" value="excluir" id="button" class="submit">
-                                </form>
+            <div class="col s12 m6 l3">
+                <div class="card product-card">
+                    <div class="card-image">
+                        <img class="custom-image" src="<?php echo $produto->getImagem() ?>">
+                    </div>
+                    <div class="card-content">
+                        <p class="product-price"> <?php echo $produto->getNome(); ?> </p>
+                        <p class="product-price"> <?php echo $produto->getDescricao(); ?> </p>
+                        <p class="product-price"> Quantidade: </p>
+                        <p class="subTotal"> R$
+                            <?php echo $pTotal = $produto->getValor() * $item->getQuantidade(); ?>
+                        </p>
+                        <form action="carrinho.php" method="post">
+                            <div class="product-price">
+                                <input type="button" name="diminuir" value="-" class="decrement">
+                                <input type="text" name="quantidade" value=""
+                                    placeholder="<?php echo $item->getQuantidade(); ?>" readonly>
+                                <label id="Aux" hidden><?php echo $produto->getQuantidade() ?></label>
+                                <?php if ($item->getQuantidade() < $produto->getQuantidade()) { ?>
+                                <input type="button" name="aumentar" value="+" class="increment">
+                                <?php } else { ?>
+                                <input type="button" name="aumentar" value="+" class="increment" disabled>
+                                <?php } ?>
                             </div>
+                    </div>
+                </div>
+
+                <input type="hidden" value="<?php echo $item->getIdProduto(); ?>" name="idProduto">
+                <input type="hidden" value="<?php echo $item->getIdCarrinho(); ?>" name="idCarrinho">
+                <input type="submit" name="editar" value="editar" id="button" class="submit">
+                <input type="submit" name="excluir" value="excluir" id="button" class="submit">
+                </form>
+            </div>
 
             <?php
                             $cont++;
@@ -141,6 +141,6 @@ include_once __DIR__ . '../Controller/ItemCarrinhoDAO.php';
     }
     ?>
 
-</body>
+</main>
 
 </html>

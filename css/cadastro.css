@@ -1,141 +1,317 @@
-body {
-    /*Mudar cor do fundo da pagina inteira*/
-    background-image: linear-gradient(45deg, #8A2BE2, #000080);
-    height: 100vh;
+.live{
+    /*Mudar fundo da pagina lives*/
+    background-image: url("../img/liveBackground.png");
 }
 
-.box {
-    /*Mudar cor do fundo da div box*/
-    background-color: #A9A9A9;
+.cadastro {
+    /*Mudar fundo da pagina cadastro*/
+    background-image: url("../img/cadastroBackground.png");
+}
 
-    /*Centralização da div*/
+/*Inicio form box*/
+.row {
+    width: 40%;
+    background: linear-gradient(#212121, #212121) padding-box,
+                linear-gradient(145deg, transparent 35%,#e81cff, #40c9ff) border-box;
+    border: 2px solid transparent;
+    padding-top: 30px;
+    font-size: 14px;
+    font-family: inherit;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    box-sizing: border-box;
+    border-radius: 16px;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-
-    /*Bordas*/
-    padding: 15px;
-    border-radius: 15px;
-    width: 500px;
 }
 
-fieldset {
-    /*Riscos da borda envolta do box*/
-    border: 3px solid black;
+.row-small {
+    width: 20%;
+    background: linear-gradient(#212121, #212121) padding-box,
+                linear-gradient(145deg, transparent 35%,#e81cff, #40c9ff) border-box;
+    border: 2px solid transparent;
+    padding-top: 30px;
+    font-size: 14px;
+    font-family: inherit;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    box-sizing: border-box;
+    border-radius: 16px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
-legend {
-    /*Título do box*/
-    border: 1px solid;
-    padding: 10px;
+.form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+  
+.form-container button:active {
+    scale: 0.95;
+}
+
+.row h1 {
     text-align: center;
-    border-radius: 8px;
-    font-weight: bold;
+    font-size: 3rem;
+    margin: 1rem 1rem;
+    padding-bottom: 1rem;
 }
 
-.inputbox {
-    /*Posição do box*/
-    position: relative;
-    margin: 30px;
+.row-small h1 {
+    text-align: center;
+    font-size: 2rem;
+    margin: 1rem 1rem;
+    padding-bottom: 1rem;
 }
-
-.inputUser {
-    /*Formata o input que o usuário digita as informações*/
-    background: none;
-    border: none;
-    border-bottom: 1px solid white;
-    outline: none;
+  
+.form-container .form-group {
+    display: flex;
+    flex-direction: column;
+}
+  
+.form-container .form-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: #fff;
+    font-weight: 600;
     font-size: 18px;
+    text-align: center;
+}
+  
+.form-container .form-group input {
+    width: 75%;
+    align-self: center;
+    text-align: center;
+    padding: 12px 16px;
+    border-radius: 8px;
+    color: #fff;
+    font-family: inherit;
+    font-size: 18px;
+    background-color: transparent;
+    border: 1px solid #414141;
+}
+  
+.row .form-container .form-group input::placeholder {
+    opacity: 0.5;
+}
+  
+.form-container .form-group input:focus {
+    outline: none;
+    border-color: #e81cff;
+}
+
+.form-container p {
+    text-align: center;
+    font-size: 20px;
+    color: red;
+    margin: 0rem 0rem;
+}
+
+.form-container a {
+    text-align: center;
+    align-self: center;
+    margin-top: 1rem;
+    color: #414141;
+    width: 60%;
+}
+
+.form-container .form-group .select-group {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 100%;
 }
 
-.labelInput {
-    /*Coloca o label dentro do input*/
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    pointer-events: none;
-    transition: .8s;
+.form-container .form-group .select-group select {
+    width: 80%;
+    margin: 5px 5px;
+    padding: 12px 16px;
+    text-align-last: center;
+    -moz-text-align-last: center;
+    color: #fff;
+    background-color: #212121;
+}
+/*Fim form box*/
+  
+/*Inicio radiobutton*/
+.form-container .radio-inputs {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    user-select: none;
+    gap: 2rem;
+    margin: 2rem 2rem;
 }
 
-.selectBox {
-    /*Formatação do selectBox Categoria*/
-    width: 79%;
-    text-align: center;
-    padding: 5px;
-    margin-left: 5px;
+.radio-input:checked + .radio-tile {
+    border-color: #8A2BE2;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    color: #8A2BE2;
 }
 
-.field-wrap {
-    /*Centralização da inserção da imagem no cadastro*/
+.radio-input:checked + .radio-tile:before {
+    transform: scale(1);
+    opacity: 1;
+    background-color: #8A2BE2;
+    border-color: #8A2BE2;
+}
+
+.radio-input:checked + .radio-tile .radio-label {
+    color: #8A2BE2;
+}
+
+.radio-input:focus + .radio-tile {
+    border-color: #8A2BE2;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1), 0 0 0 4px #b5c9fc;
+}
+
+.radio-input:focus + .radio-tile:before {
+    transform: scale(1);
+    opacity: 1;
+}
+
+.radio-tile {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-}
-
-.labelInputFile {
-    /*Espaçamento entre o label e o input da imagem*/
-    margin-bottom: 20px;
-}
-
-#imagem {
-    /*Espaçamento entre o imagem e o botão Cadastrar*/
-    margin-bottom: 20px;
-}
-
-.img {
-    /*Tamanho da imagem no alterar produto*/
-    margin-top: 20px;
-    width: 100px;
-    height: 100px;
-}
-
-.inputUser:focus ~ .labelInput,
-.inputUser:valid ~ .labelInput {
-    /*Faz o efeito do label sair do input quando alguma coisa é digitada*/
-    top: -20px;
-    font-size: 12px;
-}
-.labelCod{
-    /*Faz o efeito do label sair do input no Código do alteras*/
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    pointer-events: none;
-    transition: .8s;
-    top: -20px;
-    font-size: 12px;
-}
-
-#button {
-    /*Faz a formatação do botão*/
-    background-color: #8A2BE2;
-    font-family: 'Times New Roman', Times, serif;
-    color: white;
-    border: none;
-    padding: 15px;
-    border-radius: 15px;
-    font-size: 18px;
-    margin: 10px auto;
-    display: block;
-}
-
-#button:hover {
-    /*Faz a formatação do botão ao passar o mouse em cima*/
-    background-color: #9F5FFF;
+    width: 80px;
+    min-height: 80px;
+    border-radius: 0.5rem;
+    border: 2px solid #b5bfd9;
+    background-color: #fff;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    transition: 0.15s ease;
     cursor: pointer;
+    position: relative;
 }
 
-.submit {
-    /*width do submit para não ficar colado no box*/
-    width: 90%;
+.radio-tile:before {
+    content: "";
+    position: absolute;
+    display: block;
+    width: 0.75rem;
+    height: 0.75rem;
+    border: 2px solid #b5bfd9;
+    background-color: #fff;
+    border-radius: 50%;
+    top: 0.25rem;
+    left: 0.25rem;
+    opacity: 0;
+    transform: scale(0);
+    transition: 0.25s ease;
 }
 
-.voltar {
-    /*width do voltar menor pois é um <a> também centraliza o texto e tira o sublinhado*/
-    width: 84%;
+.radio-tile:hover {
+    border-color: #8A2BE2;
+}
+
+.radio-tile:hover:before {
+    transform: scale(1);
+    opacity: 1;
+}
+
+.radio-icon-youtube {
+    font-size: 1.5rem;
+    color: #CD201F;
+    margin: auto;
+}
+
+.radio-icon-facebook {
+    font-size: 1.5rem;
+    color: #1877F2;
+    margin: auto;
+}
+
+.radio-icon-instagram {
+    font-size: 1.5rem;
+    color: #E4405F;
+    margin: auto;
+}
+  
+.radio-label {
+    color: #707070;
+    transition: 0.375s ease;
     text-align: center;
-    text-decoration: none;
+    font-size: 13px;
+    position: absolute;
+    bottom: 0;
 }
+
+.radio-input {
+    clip: rect(0 0 0 0);
+    -webkit-clip-path: inset(100%);
+    clip-path: inset(100%);
+    height: 1px;
+    overflow: hidden;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
+}
+/*Fim radiobutton*/
+
+/*Inicio buttons*/
+.button-container {
+    display: flex;
+    justify-content: center;
+}
+
+button {
+    font-family: inherit;
+    display: inline-block;
+    width: 8em;
+    height: 2.6em;
+    line-height: 2.5em;
+    margin: 20px;
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+    border: 2px solid #8A2BE2;
+    transition: color 0.5s;
+    z-index: 1;
+    font-size: 17px;
+    border-radius: 6px;
+    font-weight: 500;
+    color: #8A2BE2;
+}
+  
+button:before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    background: #8A2BE2;
+    height: 150px;
+    width: 200px;
+    border-radius: 50%;
+}
+  
+button:hover {
+    color: #fff;
+}
+  
+button:before {
+    top: 100%;
+    left: 100%;
+    transition: all 0.7s;
+}
+  
+button:hover:before {
+    top: -30px;
+    left: -30px;
+}
+  
+button:active:before {
+    background: #3a0ca3;
+    transition: background 0s;
+}
+/*Fim buttons*/
+

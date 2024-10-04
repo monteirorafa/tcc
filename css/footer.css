@@ -1,5 +1,15 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
 
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+main {
+  flex: 1 0 auto;
+}
+
 .page-footer {
     /*Cor de fundo do menu*/
     background-image: linear-gradient(to right, #8A2BE2 , #000080);
@@ -112,23 +122,23 @@
     text-decoration: none;
     position: relative;
     cursor: pointer;
-    border: solid transparent; /* Borda inicial invisível */
+    border: solid transparent;
 }
 
 .lista:hover {
     background: #000080;
-    border: solid #ffffff; /* Muda a cor da borda no hover */
+    border: solid #ffffff;
 }
 
 .lista a {
-    color: black; /* Muda a cor da letra para vermelho */
-    text-decoration: none; /* Remove o sublinhado */
-    display: block; /* Para garantir que a centralização funcione */
-    text-align: center; /* Centraliza o texto no link */
-    padding: 0.7rem 0.7rem; /* Espaçamento interno para descer o texto */
+    color: black;
+    text-decoration: none;
+    display: block;
+    text-align: center;
+    padding: 0.7rem 0.7rem;
 }
 
 .lista a:hover {
-    color: white; /* Muda a cor da letra para branco no hover */
+    color: white;
 }
 /*Fim lista de links*/

@@ -8,22 +8,26 @@
     <link rel="stylesheet" href="css/cadastro.css">
 </head>
 
-<body>
-    <div class="box">
-        <form action="parar.php" method="post">
-            <fieldset>
-                <legend>Parar Live</legend>
+<body class="live">
+    <div class="row">
+        <div class="form-container">
+            <form action="parar.php" method="post">
+                <div class="form-group">
+                    <label>Parar Live</label>
 
-                Tem certeza que deseja encerrar a transmissão?
+                    <label>Tem certeza que deseja encerrar a transmissão?</label>
 
-                <input type="submit" name="Sim" value="Sim" id="button" class="submit">
+                    <div class="button-container">
+                        <button name="Sim" value="Sim">Parar Live</button>
+                        <button class="button" onclick="window.location.href='index.php';">
+                            <span class="button-content">Voltar</span>
+                        </button>
+                    </div>
 
-                <a href="index.php" id="button" class="voltar">Voltar</a>
-
-            </fieldset>
-        </form>
+                </div>
+            </form>
+        </div>
     </div>
-
     <?php
     include_once __DIR__ . '../Controller/Live.php';
     include_once __DIR__ . '../Controller/LiveDAO.php';

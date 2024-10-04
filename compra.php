@@ -25,7 +25,7 @@ include_once __DIR__ . '../Controller/PedidoDAO.php';
     <title>Finalizar Compra</title>
 </head>
 
-<body>
+<main>
 
     <div class="container">
         <form action="compra.php" method="post">
@@ -50,35 +50,33 @@ include_once __DIR__ . '../Controller/PedidoDAO.php';
                         $usuario = new Usuario($usuario);
                     ?>
 
-                    <div class="col s10">
-                        <span class="card-title">Dados de entrega:</span>
-                        <p class="product-price"> Endereço:
-                            <?php echo $usuario->getEndereco() . ", " . $usuario->getNumero(); ?> </p>
-                        <p class="product-price"> Cidade:
-                            <?php echo $usuario->getCidade() . "/ " . $usuario->getEstado(); ?></p>
-                        <p class="product-price"> CEP: <?php echo $usuario->getCep(); ?></p>
-                        <p class="product-price"> Contato: <?php echo $usuario->getTelefone(); ?></p>
-                        <div class="editar"><a href="#.php">Editar endereço</a></div>
-                    </div>
+                        <div class="col s10">
+                            <span class="card-title">Dados de entrega:</span>
+                            <p class="product-price"> Endereço:
+                                <?php echo $usuario->getEndereco() . ", " . $usuario->getNumero(); ?> </p>
+                            <p class="product-price"> Cidade:
+                                <?php echo $usuario->getCidade() . "/ " . $usuario->getEstado(); ?></p>
+                            <p class="product-price"> CEP: <?php echo $usuario->getCep(); ?></p>
+                            <p class="product-price"> Contato: <?php echo $usuario->getTelefone(); ?></p>
+                            <div class="editar"><a href="#.php">Editar endereço</a></div>
+                        </div>
 
-                    <p>Selecione o tipo de entrega:</p>
-                    <input type="radio" id="retirada" name="entrega" value="retirada" required checked>
-                    <label for="retirada">Retirar na Loja</label><br>
-                    <input type="radio" id="correios" name="entrega" value="correios">
-                    <label for="correios">Correios</label><br>
-                    <input type="radio" id="transportadora" name="entrega" value="transportadora">
-                    <label for="transportadora">Transportadora</label>
+                        <p>Selecione o tipo de entrega:</p>
+                        <input type="radio" id="retirada" name="entrega" value="Retirada" required checked>
+                        <label for="retirada">Retirar na Loja</label><br>
+                        <input type="radio" id="correios" name="entrega" value="Entrega">
+                        <label for="correios">Correios</label><br>
 
                 </div>
 
                 <div>
                     <p>Selecione a forma de pagamento:</p>
-                    <input type="radio" id="pix" name="pagamento" value="pix" required checked>
+                    <input type="radio" id="pix" name="pagamento" value="Pix" required checked>
                     <label for="pix">Pix</label><br>
-                    <input type="radio" id="cartao" name="pagamento" value="cartao">
+                    <input type="radio" id="cartao" name="pagamento" value="Cartão">
                     <label for="cartao">Cartão</label><br>
                     <input type="radio" id="Boleto" name="pagamento" value="Boleto">
-                    <label for="Boleto">Boleto</label>
+                    <label for="boleto">Boleto</label>
                 </div>
 
             </div>
@@ -109,20 +107,20 @@ include_once __DIR__ . '../Controller/PedidoDAO.php';
                                 foreach ($itensPorProduto[$produtoId] as $item) {
             ?>
 
-            <ul class="collection">
-                <li class="collection-item avatar">
-                    <img src="<?php echo $produto->getImagem() ?>" alt="" class="circle">
-                    <span class="title"><?php echo $produto->getNome() ?></span>
-                    <p><?php echo $produto->getDescricao() ?><br>
-                        R$: <?php echo $produto->getValor() ?> <br>
-                        <?php echo $item->getQuantidade() . " unidades" ?>
-                    </p>
-                    <p class="secondary-content">Valor total deste item: R$
-                        <?php echo $pTotal = $produto->getValor() * $item->getQuantidade(); ?></p>
-                </li>
-            </ul>
+                        <ul class="collection">
+                            <li class="collection-item avatar">
+                                <img src="<?php echo $produto->getImagem() ?>" alt="" class="circle">
+                                <span class="title"><?php echo $produto->getNome() ?></span>
+                                <p><?php echo $produto->getDescricao() ?><br>
+                                    R$: <?php echo $produto->getValor() ?> <br>
+                                    <?php echo $item->getQuantidade() . " unidades" ?>
+                                </p>
+                                <p class="secondary-content">Valor total deste item: R$
+                                    <?php echo $pTotal = $produto->getValor() * $item->getQuantidade(); ?></p>
+                            </li>
+                        </ul>
 
-            <?php
+        <?php
 
                                     $vTotal += $pTotal;
                                 }
@@ -131,17 +129,17 @@ include_once __DIR__ . '../Controller/PedidoDAO.php';
                     }
         ?>
 
-            <input type="hidden" value="<?php echo $item->getIdCarrinho() ?>" name="idCarrinho">
-            <input type="hidden" value="<?php echo $_SESSION['id'] ?>" name="idUsuario">
-            <input type="hidden" value="<?php echo $vTotal ?>" name="total">
-            <input type="hidden" value="processando" name="situacao">
+        <input type="hidden" value="<?php echo $item->getIdCarrinho() ?>" name="idCarrinho">
+        <input type="hidden" value="<?php echo $_SESSION['id'] ?>" name="idUsuario">
+        <input type="hidden" value="<?php echo $vTotal ?>" name="total">
+        <input type="hidden" value="Processando" name="situacao">
 
-            <div class="total">Total R$ <?php echo $vTotal ?> </div>
+        <div class="total">Total R$ <?php echo $vTotal ?> </div>
 
-            <button name="finalizar" value="finalizar>">Finalizar Compra</button>
+        <button name="finalizar" value="finalizar>">Finalizar Compra</button>
 
 
-            <?php if (isset($_POST["finalizar"])) {
+        <?php if (isset($_POST["finalizar"])) {
             $pedidoDAO = new PedidoDAO();
             $pedido = new Pedido($_POST);
             $pedidoDAO->adicionaPedido($pedido, $_SESSION['id']);
@@ -151,6 +149,6 @@ include_once __DIR__ . '../Controller/PedidoDAO.php';
 
     </div>
 
-</body>
+</main>
 
 </html>

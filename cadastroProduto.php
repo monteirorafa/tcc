@@ -8,50 +8,63 @@
     <link rel="stylesheet" href="css/cadastro.css">
 </head>
 
-<body>
-    <div class="box">
-        <form action="cadastroProduto.php" method="post" enctype="multipart/form-data">
-            <fieldset>
-                <legend>Cadastro de Produto</legend>
-                <div class="inputbox">
-                    <input type="text" name="nome" id="nome" class="inputUser" autocomplete="one-time-code" required>
-                    <label for="nome" class="labelInput">Nome do Produto</label>
-                </div>
-                <div class="inputbox">
-                    <label for="categoria" class="inputUser">Categoria:</label>
-                    <select name="categoria" id="categoria" class="selectBox" required>
-                        <option value="" disabled selected>--Selecione--</option>
-                        <option value="Calçados">Calçados</option>
-                        <option value="Decoração">Decoração</option>
-                        <option value="Eletrônicos">Eletrônicos</option>
-                        <option value="Roupas">Roupas</option>
-                    </select>
-                </div>
-                <div class="inputbox">
-                    <input type="text" name="valor" id="valor" class="inputUser" pattern="[0-9,]*"
-                        title="Somente números e vírgula para centavos, máximo 10." required>
-                    <label for="valor" class="labelInput">Valor</label>
-                </div>
-                <div class="inputbox">
-                    <input type="text" name="quantidade" id="quantidade" class="inputUser" pattern="[0-9.]*"
-                        title="Somente números e ponto para centavos, máximo 10." required>
-                    <label for="quantidade" class="labelInput">Quantidade</label>
-                </div>
-                <div class="inputbox">
-                    <input type="text" name="descricao" id="descricao" class="inputUser" required>
-                    <label for="descricao" class="labelInput">Descrição</label>
+<body class="cadastro">
+    <div class="row">
+
+        <form action="cadastroProduto.php" method="post" enctype="multipart/form-data" class="form">
+
+            <h1>Cadastro de Produto</h1>
+
+            <div class="form-container">
+                <div class="form-group">
+                    <label for="nome">Nome do Produto</label>
+                    <input type="text" name="nome" id="nome" autocomplete="one-time-code" required>
                 </div>
 
-                <div class="field-wrap">
+                <div class="form-group">
+                    <label for="categoria">Categoria:</label>
+                    <span class="select-group">
+                        <select name="categoria" required>
+                            <option value="" disabled selected>--Selecione--</option>
+                            <option value="Calçados">Calçados</option>
+                            <option value="Decoração">Decoração</option>
+                            <option value="Eletrônicos">Eletrônicos</option>
+                            <option value="Roupas">Roupas</option>
+                        </select>
+                    </span>
+                </div>
+
+                <div class="form-group">
+                    <label for="valor">Valor</label>
+                    <input type="text" name="valor" id="valor" pattern="[0-9,]*"
+                        title="Somente números e vírgula para centavos, máximo 10." required>
+                </div>
+
+                <div class="form-group">
+                    <label for="quantidade">Quantidade</label>
+                    <input type="text" name="quantidade" id="quantidade" pattern="[0-9.]*"
+                        title="Somente números e ponto para centavos, máximo 10." required>
+                </div>
+
+                <div class="form-group">
+                    <label for="descricao">Descrição</label>
+                    <input type="text" name="descricao" id="descricao" required>
+                </div>
+
+                <div class="form-group">
                     <label for="imagem" class="labelInputFile">Imagem do Produto</label>
                     <input type="file" name="imagem" id="imagem" class="imagem" accept="image/*" required />
                 </div>
+            </div>
+            <input type="hidden" value="" name="criado">
 
-                <input type="hidden" value="" name="criado">
-                <input type="submit" name="Cadastrar" value="Cadastrar" id="button" class="submit">
+            <div class="button-container">
+                <button name="Cadastrar" value="Cadastrar">Cadastrar</button>
+                <button class="button" onclick="window.location.href='produtos.php';">
+                    <span class="button-content">Voltar</span>
+                </button>
+            </div>
 
-                <a href="produtos.php" id="button" class="voltar">Voltar</a>
-            </fieldset>
         </form>
     </div>
 

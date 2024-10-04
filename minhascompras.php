@@ -22,9 +22,12 @@ include_once __DIR__ . '../Controller/PedidoDAO.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="css/minhascompras.css">
+    <script src="js/minhascompras.js"></script>
 </head>
 
-<body>
+<main>
 
     <div class="container">
 
@@ -37,7 +40,9 @@ include_once __DIR__ . '../Controller/PedidoDAO.php';
             $objetoCarrinho = $produtoDAO->todosInativo();
             $carrinhoID = $carrinhoDAO->consultaTodosCarrinhoInativo();
             echo "<title>Minhas Vendas</title>";
-            echo "<h1 class='titulo'>Minhas Vendas</h1>";
+            echo "<div class='titulo'>";
+            echo "<h1>Minhas Vendas</h1>";
+            echo "</div>";
         } else {
             $objetoCarrinho = $produtoDAO->produtosCarrinhoInativo();
             $carrinhoID = $carrinhoDAO->consultaCarrinhoInativo();
@@ -64,112 +69,170 @@ include_once __DIR__ . '../Controller/PedidoDAO.php';
             }
 
             foreach ($pedidos as $pedido) {
+
+                if ($pedido->getSituacao() == "Cancelado") {
+                    $collapsible = "vermelho";
+                } elseif ($pedido->getSituacao() == "Entregue") {
+                    $collapsible = "verde";
+                } elseif ($pedido->getSituacao() == "Enviado") {
+                    $collapsible = "azul";
+                } elseif ($pedido->getSituacao() == "Processando") {
+                    $collapsible = "amarelo";
+                }
+
                 if ($adm) {
                     $usuarioDAO = new UsuarioDAO();
                     $usuarios = $usuarioDAO->consultaUsuario($pedido->getIdUsuario());
-                    foreach ($usuarios as $usuario) {
-        ?>
+                    foreach ($usuarios as $usuario) { ?>
 
-        <ul class="collapsible">
-            <li>
-                <div class="collapsible-header"><i class="material-icons">directions_bus</i>Pedido Número:
-                    <?php echo $pedido->getId() ?>
-                    <span>Valor Total: <?php echo $pedido->getTotal() ?></span>
-                    <span>Comprador: <?php echo $usuario->getNome() ?></span>
-                    <span>Clique para detalhes</span>
-                </div>
+                        <ul class="collapsible <?php echo $collapsible ?>">
+                            <li>
+                                <div class="collapsible-header"><i class="material-icons">directions_bus</i>
+                                    <span class="item">Nº: <?php echo $pedido->getId() ?></span>
+                                    <span class="item">Comprador: <?php echo $usuario->getNome() ?></span>
+                                    <span class="item">Valor Total: R$ <?php echo $pedido->getTotal() ?></span>
+                                    <span class="item">Status: <?php echo $pedido->getSituacao() ?></span>
+                                    <i class="material-icons">arrow_drop_down</i>
+                                </div>
 
-                <div class="collapsible-body">
+                                <div class="collapsible-body">
 
-                    <?php
+                                    <p class="topo">Pedido realizado: <?php echo $pedido->getCriado() ?></p>
+                                    <p class="topo">Forma de pagamento: <?php echo $pedido->getPagamento() ?></p>
+                                    <p class="topo">Forma de envio: <?php echo $pedido->getEntrega() ?></p>
+
+                                    <?php
+                                    if ($pedido->getSituacao() == "Processando") { ?>
+                                        <form action="minhascompras.php" method="post">
+                                            <button type="submit" name="enviar" value="<?php echo $pedido->getId() ?>" class="button">
+                                                <span class="button-content">Pedido enviado</span>
+                                            </button>
+                                        </form>
+
+                                    <?php } elseif ($pedido->getSituacao() == "Enviado") { ?>
+                                        <form action="minhascompras.php" method="post">
+                                            <button type="submit" name="finalizar" value="<?php echo $pedido->getId() ?>" class="button">
+                                                <span class="button-content">Pedido entregue</span>
+                                            </button>
+                                        </form>
+
+                                        <?php
+                                    }
                                     foreach ($objetoCarrinho as $produtoData) {
                                         $produto = new Produto($produtoData);
                                         $produtoId = $produto->getId();
                                         if (isset($itensPorProduto[$produtoId])) {
                                             foreach ($itensPorProduto[$produtoId] as $item) {
-                                    ?>
+                                        ?>
 
-                    <ul class="collection">
-                        <li class="collection-item avatar">
-                            <img src="<?php echo $produto->getImagem() ?>" alt="" class="circle">
-                            <span class="title"><?php echo $produto->getNome() ?></span>
-                            <p><?php echo $produto->getDescricao() ?><br>
-                                R$: <?php echo $produto->getValor() ?> <br>
-                                <?php echo $item->getQuantidade() . " unidades" ?>
-                            </p>
-                            <p class="secondary-content">Valor total deste item: R$
-                                <?php echo $pTotal = $produto->getValor() * $item->getQuantidade(); ?></p>
-                        </li>
-                    </ul>
+                                                <div class="container" id="items">
+                                                    <ul class="collection">
+                                                        <li class="collection-item avatar">
+                                                            <img src="<?php echo $produto->getImagem() ?>" alt="" class="circle">
+                                                            <strong><span class="title"><?php echo $produto->getNome() ?></span></strong>
+                                                            <p><?php echo $produto->getDescricao() ?></p>
+                                                            <p>R$: <?php echo $produto->getValor() ?></p>
+                                                            <p><?php echo $item->getQuantidade() . " unidades" ?></p>
+                                                            <p class="secondary-content">Valor total deste item: R$
+                                                                <?php echo $pTotal = $produto->getValor() * $item->getQuantidade(); ?></p>
+                                                        </li>
+                                                    </ul>
+                                                </div>
 
-                    <?php
+                                    <?php
                                             }
                                         }
                                     }
                                     ?>
-                    <p>Pedido realizado: <?php echo $pedido->getCriado() ?></p>
-                    <p>Forma de pagamento: <?php echo $pedido->getPagamento() ?></p>
-                    <p>Status da entrega: <?php echo $pedido->getSituacao() ?></p>
-                    <p>Nome: <?php echo $usuario->getNome() ?></p>
-                    <p>CPF: <?php echo $usuario->getCpf() ?></p>
-                    <p>E-mail: <?php echo $usuario->getEmail() ?></p>
-                    <p>Telefone: <?php echo $usuario->getTelefone() ?></p>
-                    <p>Endereço: <?php echo $usuario->getEndereco() . ", " . $usuario->getNumero() ?></p>
-                    <p>Cidade: <?php echo $usuario->getCidade() . "/" . $usuario->getEstado() ?></p>
-                    <p>CEP: <?php echo $usuario->getCep() ?></p>
 
-
-
-                </div>
-            </li>
-        </ul>
-
-        <?php
-                    }
-                } else { ?>
-        <ul class="collapsible">
-            <li>
-                <div class="collapsible-header"><i class="material-icons">directions_bus</i>Pedido Número:
-                    <?php echo $pedido->getId() ?>
-                    <span>Valor Total: <?php echo $pedido->getTotal() ?></span>
-                    <span>Clique para detalhes</span>
-                </div>
-
-                <div class="collapsible-body">
+                                    <div class="container" id="info">
+                                        <ul class="collapsible custom-collapsible">
+                                            <li>
+                                                <div class="collapsible-header"><i class="material-icons">info_outline</i>
+                                                    <span>Informações do Comprador</span>
+                                                    <i class="material-icons">arrow_drop_down</i>
+                                                </div>
+                                                <div class="collapsible-body">
+                                                    <p>CPF: <?php echo $usuario->getNome() ?></p>
+                                                    <p>CPF: <?php echo $usuario->getCpf() ?></p>
+                                                    <p>E-mail: <?php echo $usuario->getEmail() ?></p>
+                                                    <p>Telefone: <?php echo $usuario->getTelefone() ?></p>
+                                                    <p>Endereço:
+                                                        <?php echo $usuario->getEndereco() . ", " . $usuario->getNumero() . ". " . $usuario->getCidade() . "/" . $usuario->getEstado() . ". " . $usuario->getCep() . "." ?>
+                                                    </p>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
 
                     <?php
+                    }
+                } else { ?>
+
+                    <ul class="collapsible <?php echo $collapsible ?>">
+                        <li>
+                            <div class="collapsible-header"><i class="material-icons">directions_bus</i>
+                                <span class="item">Nº: <?php echo $pedido->getId() ?></span>
+                                <span class="item">Data da Compra: <?php echo $pedido->getCriado() ?></span>
+                                <span class="item">Valor Total: <?php echo $pedido->getTotal() ?></span>
+                                <span class="item">Status: <?php echo $pedido->getSituacao() ?></span>
+                                <i class="material-icons">arrow_drop_down</i>
+                            </div>
+
+                            <div class="collapsible-body">
+
+                                <p class="topo">Forma de pagamento: <?php echo $pedido->getPagamento() ?></p>
+                                <p class="topo">Forma de recebimento: <?php echo $pedido->getEntrega() ?></p>
+
+                                <?php
+                                if ($pedido->getSituacao() == "Processando" || $pedido->getSituacao() == "Enviado") { ?>
+                                    <form action="minhascompras.php" method="post">
+                                        <button type="submit" name="cancelar" value="<?php echo $pedido->getId() ?>" class="button">
+                                            <span class="button-content">Cancelar Compra</span>
+                                        </button>
+                                    </form>
+
+                                <?php } elseif ($pedido->getSituacao() == "Entregue") { ?>
+                                    <form action="minhascompras.php" method="post">
+                                        <button type="submit" name="devolver" value="<?php echo $pedido->getId() ?>" class="button">
+                                            <span class="button-content">Devolver Compra</span>
+                                        </button>
+                                    </form>
+
+                                    <?php }
                                 foreach ($objetoCarrinho as $produtoData) {
                                     $produto = new Produto($produtoData);
                                     $produtoId = $produto->getId();
                                     if (isset($itensPorProduto[$produtoId])) {
                                         foreach ($itensPorProduto[$produtoId] as $item) {
-                                ?>
+                                    ?>
 
-                    <ul class="collection">
-                        <li class="collection-item avatar">
-                            <img src="<?php echo $produto->getImagem() ?>" alt="" class="circle">
-                            <span class="title"><?php echo $produto->getNome() ?></span>
-                            <p><?php echo $produto->getDescricao() ?><br>
-                                R$: <?php echo $produto->getValor() ?> <br>
-                                <?php echo $item->getQuantidade() . " unidades" ?>
-                            </p>
-                            <p class="secondary-content">Valor total deste item: R$
-                                <?php echo $pTotal = $produto->getValor() * $item->getQuantidade(); ?></p>
-                        </li>
-                    </ul>
+                                            <div class="container" id="items">
+                                                <ul class="collection">
+                                                    <li class="collection-item avatar">
+                                                        <img src="<?php echo $produto->getImagem() ?>" alt="" class="circle">
+                                                        <strong><span class="title"><?php echo $produto->getNome() ?></span></strong>
+                                                        <p><?php echo $produto->getDescricao() ?></p>
+                                                        <p>R$: <?php echo $produto->getValor() ?></p>
+                                                        <p><?php echo $item->getQuantidade() . " unidades" ?></p>
+                                                        <p class="secondary-content">Valor total deste item: R$
+                                                            <?php echo $pTotal = $produto->getValor() * $item->getQuantidade(); ?></p>
+                                                    </li>
+                                                </ul>
+                                            </div>
 
-                    <?php
+                                <?php
                                         }
                                     }
                                 }
                                 ?>
-                    <p>Pedido realizado: <?php echo $pedido->getCriado() ?></p>
-                    <p>Forma de pagamento: <?php echo $pedido->getPagamento() ?></p>
-                    <p>Status da entrega: <?php echo $pedido->getSituacao() ?></p>
 
-                </div>
-            </li>
-        </ul>
+                            </div>
+                        </li>
+                    </ul>
         <?php }
             }
         }
@@ -177,6 +240,27 @@ include_once __DIR__ . '../Controller/PedidoDAO.php';
 
     </div>
 
-</body>
+    <?php
+    if (isset($_POST["enviar"])) {
+        $mudarPedido = new PedidoDAO();
+        $mudarPedido->pedidoEnviado($_POST["enviar"]);
+    }
+    if (isset($_POST["finalizar"])) {
+        $mudarPedido = new PedidoDAO();
+        $mudarPedido->pedidoEntregue($_POST["finalizar"]);
+    }
+    if (isset($_POST["devolver"])) {
+        $mudarPedido = new PedidoDAO();
+        $mudarPedido->extorno($_POST["devolver"]);
+    }
+    if (isset($_POST["cancelar"])) {
+        $mudarPedido = new PedidoDAO();
+        $mudarPedido->extorno($_POST["cancelar"]);
+    }
+    ?>
+
+</main>
+
+<?php include_once __DIR__ . '/footer.php'; ?>
 
 </html>

@@ -21,30 +21,33 @@ include_once __DIR__ . '../Controller/CarrinhoDAO.php';
     <!-- Materialize JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
+    <link rel="stylesheet" href="css/index.css">
     <link rel="stylesheet" href="css/produtos.css">
     <script src="js/produtos.js"></script>
 </head>
 
-<body>
-    <div class="cabecalho">
-        <h1 class="titulo">Produtos</h1>
+<main>
+    <div class="container">
+        <div class="titulo">
+            <h1>Produtos</h1>
+
+            <?php
+            $adm = isset($_SESSION['adm']) && $_SESSION['adm'] == 1;
+            if ($adm) { ?>
+            <button class="button" onclick="window.location.href='cadastroProduto.php';">
+                <span class="button-content">Cadastrar</span>
+            </button>
+            <?php }
+            ?>
+
+        </div>
 
         <?php
-        $adm = isset($_SESSION['adm']) && $_SESSION['adm'] == 1;
-        if ($adm) {
-            echo "<a href='cadastroProduto.php' class='button'>Cadastrar Produto</a>";
-        }
+        $cont = 0;
+        $produtoDAO = new ProdutoDAO();
+        $objetoProduto = $produtoDAO->consultaProdutos();
         ?>
 
-    </div>
-
-    <?php
-    $cont = 0;
-    $produtoDAO = new ProdutoDAO();
-    $objetoProduto = $produtoDAO->consultaProdutos();
-    ?>
-
-    <div class="container">
         <div class="row">
 
             <?php
@@ -63,22 +66,21 @@ include_once __DIR__ . '../Controller/CarrinhoDAO.php';
 
                         <?php
                             $adm = isset($_SESSION['adm']) && $_SESSION['adm'] == 1;
-                            if ($adm) { ?>
+                            if ($adm && isset($_SESSION['id'])) { ?>
 
-                        <form method="post" action="alteraProduto.php">
+                        <form method="post" action="alteraProduto.php"
+                            id="productForm-<?php echo $produto->getId(); ?>">
                             <input type="hidden" name="altera" value="<?php echo $produto->getId(); ?>">
                             <a class="btn-floating halfway-fab waves-effect waves-light indigo darken-4 tooltipped custom-tooltip"
-                                id="altera-<?php echo $produto->getId(); ?>" data-position="left"
-                                data-tooltip="Alterar Produto" onclick="this.blur();">
-                                <i class="material-icons">edit</i></a>
+                                id="submitBtn-<?php echo $produto->getId(); ?>" data-position="left"
+                                data-tooltip="Alterar Produto"><i class="material-icons">edit</i></a>
                         </form>
 
-                        <?php } else { ?>
-
+                        <?php } elseif (isset($_SESSION['id'])) { ?>
                         <form method="post" action="produtos.php" id="productForm-<?php echo $produto->getId(); ?>">
                             <input type="hidden" name="carrinho" value="<?php echo $produto->getId(); ?>">
                             <a class="btn-floating halfway-fab waves-effect waves-light indigo darken-4 tooltipped custom-tooltip"
-                                id="carrinho-<?php echo $produto->getId(); ?>" data-position="left"
+                                id="submitBtn-<?php echo $produto->getId(); ?>" data-position="left"
                                 data-tooltip="Adicionar ao Carrinho" onclick="this.blur();">
                                 <i class="material-icons">add</i>
                             </a>
@@ -98,6 +100,9 @@ include_once __DIR__ . '../Controller/CarrinhoDAO.php';
                             title="<?php echo $produto->getValor(); ?>">R$ <?php echo $produto->getValor(); ?>
                         </p>
                         <p class="descricao"><?php echo $produto->getDescricao(); ?></p>
+                        <?php if ($adm && isset($_SESSION['id'])) { ?>
+                        <p class="estoque">Estoque: <?php echo $produto->getQuantidade(); ?></p>
+                        <?php } ?>
                     </div>
                 </div>
             </div>
@@ -113,6 +118,9 @@ include_once __DIR__ . '../Controller/CarrinhoDAO.php';
 
         </div>
     </div>
-</body>
+
+</main>
+
+<?php include_once __DIR__ . '/footer.php'; ?>
 
 </html>
