@@ -104,4 +104,14 @@ class ProdutoDAO
         $produto = $pstmt->fetchAll(PDO::FETCH_CLASS, Produto::class);
         return $produto;
     }
+
+    public function buscaProdutos($termo)
+    {
+        $pstmt = $this->conexao->prepare("SELECT * FROM produto WHERE nome LIKE :termo OR descricao LIKE :termo ORDER BY nome, descricao");
+        $termo = "%" . $termo . "%";
+        $pstmt->bindParam(':termo', $termo, PDO::PARAM_STR);
+        $pstmt->execute();
+        $produto = $pstmt->fetchAll(PDO::FETCH_CLASS, Produto::class);
+        return $produto;
+    }
 }

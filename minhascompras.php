@@ -50,8 +50,22 @@ include_once __DIR__ . '../Controller/PedidoDAO.php';
             echo "<div class='titulo'>";
             echo "<h1>Minhas Compras</h1>";
             echo "</div>";
-        }
+        } ?>
 
+        <form class="searchForm" action="minhascompras.php" method="post">
+            <input class="busca" id="search" name="search" type="search" placeholder="Buscar...">
+        </form>
+
+        <?php
+        if (isset($_POST['search'])) { ?>
+
+        <div class="limpar">
+            <span class="termo"><?php echo $_POST["search"] ?></span>
+            <span class="divisor"></span>
+            <i class="tiny material-icons closed" onclick="window.location.href='clientes.php';">close</i>
+        </div>
+
+        <?php }
         foreach ($carrinhoID as $carrinho) {
             $itemDAO = new ItemCarrinhoDAO();
             $objetoItem = $itemDAO->consultaInativo($carrinho);
@@ -87,38 +101,38 @@ include_once __DIR__ . '../Controller/PedidoDAO.php';
                     $usuarios = $usuarioDAO->consultaUsuario($pedido->getIdUsuario());
                     foreach ($usuarios as $usuario) { ?>
 
-                        <ul class="collapsible <?php echo $collapsible ?>">
-                            <li>
-                                <div class="collapsible-header"><i class="material-icons">directions_bus</i>
-                                    <span class="item">Nº: <?php echo $pedido->getId() ?></span>
-                                    <span class="item">Comprador: <?php echo $usuario->getNome() ?></span>
-                                    <span class="item">Valor Total: R$ <?php echo $pedido->getTotal() ?></span>
-                                    <span class="item">Status: <?php echo $pedido->getSituacao() ?></span>
-                                    <i class="material-icons">arrow_drop_down</i>
-                                </div>
+        <ul class="collapsible <?php echo $collapsible ?>">
+            <li>
+                <div class="collapsible-header"><i class="material-icons">directions_bus</i>
+                    <span class="item">Nº: <?php echo $pedido->getId() ?></span>
+                    <span class="item">Comprador: <?php echo $usuario->getNome() ?></span>
+                    <span class="item">Valor Total: R$ <?php echo $pedido->getTotal() ?></span>
+                    <span class="item">Status: <?php echo $pedido->getSituacao() ?></span>
+                    <i class="material-icons">arrow_drop_down</i>
+                </div>
 
-                                <div class="collapsible-body">
+                <div class="collapsible-body">
 
-                                    <p class="topo">Pedido realizado: <?php echo $pedido->getCriado() ?></p>
-                                    <p class="topo">Forma de pagamento: <?php echo $pedido->getPagamento() ?></p>
-                                    <p class="topo">Forma de envio: <?php echo $pedido->getEntrega() ?></p>
+                    <p class="topo">Pedido realizado: <?php echo $pedido->getCriado() ?></p>
+                    <p class="topo">Forma de pagamento: <?php echo $pedido->getPagamento() ?></p>
+                    <p class="topo">Forma de envio: <?php echo $pedido->getEntrega() ?></p>
 
-                                    <?php
+                    <?php
                                     if ($pedido->getSituacao() == "Processando") { ?>
-                                        <form action="minhascompras.php" method="post">
-                                            <button type="submit" name="enviar" value="<?php echo $pedido->getId() ?>" class="button">
-                                                <span class="button-content">Pedido enviado</span>
-                                            </button>
-                                        </form>
+                    <form action="minhascompras.php" method="post">
+                        <button type="submit" name="enviar" value="<?php echo $pedido->getId() ?>" class="button">
+                            <span class="button-content">Pedido enviado</span>
+                        </button>
+                    </form>
 
-                                    <?php } elseif ($pedido->getSituacao() == "Enviado") { ?>
-                                        <form action="minhascompras.php" method="post">
-                                            <button type="submit" name="finalizar" value="<?php echo $pedido->getId() ?>" class="button">
-                                                <span class="button-content">Pedido entregue</span>
-                                            </button>
-                                        </form>
+                    <?php } elseif ($pedido->getSituacao() == "Enviado") { ?>
+                    <form action="minhascompras.php" method="post">
+                        <button type="submit" name="finalizar" value="<?php echo $pedido->getId() ?>" class="button">
+                            <span class="button-content">Pedido entregue</span>
+                        </button>
+                    </form>
 
-                                        <?php
+                    <?php
                                     }
                                     foreach ($objetoCarrinho as $produtoData) {
                                         $produto = new Produto($produtoData);
@@ -127,84 +141,84 @@ include_once __DIR__ . '../Controller/PedidoDAO.php';
                                             foreach ($itensPorProduto[$produtoId] as $item) {
                                         ?>
 
-                                                <div class="container" id="items">
-                                                    <ul class="collection">
-                                                        <li class="collection-item avatar">
-                                                            <img src="<?php echo $produto->getImagem() ?>" alt="" class="circle">
-                                                            <span class="title"><?php echo $produto->getNome() ?></span>
-                                                            <p><?php echo $produto->getDescricao() ?></p>
-                                                            <p>R$: <?php echo $produto->getValor() ?></p>
-                                                            <p><?php echo $item->getQuantidade() . " unidades" ?></p>
-                                                            <p class="secondary-content">Valor total deste item: R$
-                                                                <?php echo $pTotal = $produto->getValor() * $item->getQuantidade(); ?></p>
-                                                        </li>
-                                                    </ul>
-                                                </div>
+                    <div class="container" id="items">
+                        <ul class="collection">
+                            <li class="collection-item avatar">
+                                <img src="<?php echo $produto->getImagem() ?>" alt="" class="circle">
+                                <span class="title"><?php echo $produto->getNome() ?></span>
+                                <p><?php echo $produto->getDescricao() ?></p>
+                                <p>R$: <?php echo $produto->getValor() ?></p>
+                                <p><?php echo $item->getQuantidade() . " unidades" ?></p>
+                                <p class="secondary-content">Valor total deste item: R$
+                                    <?php echo $pTotal = $produto->getValor() * $item->getQuantidade(); ?></p>
+                            </li>
+                        </ul>
+                    </div>
 
-                                    <?php
+                    <?php
                                             }
                                         }
                                     }
                                     ?>
 
-                                    <div class="container" id="info">
-                                        <ul class="collapsible custom-collapsible">
-                                            <li>
-                                                <div class="collapsible-header"><i class="material-icons">info_outline</i>
-                                                    <span>Informações do Comprador</span>
-                                                    <i class="material-icons">arrow_drop_down</i>
-                                                </div>
-                                                <div class="collapsible-body">
-                                                    <p>CPF: <?php echo $usuario->getNome() ?></p>
-                                                    <p>CPF: <?php echo $usuario->getCpf() ?></p>
-                                                    <p>E-mail: <?php echo $usuario->getEmail() ?></p>
-                                                    <p>Telefone: <?php echo $usuario->getTelefone() ?></p>
-                                                    <p>Endereço:
-                                                        <?php echo $usuario->getEndereco() . ", " . $usuario->getNumero() . ". " . $usuario->getCidade() . "/" . $usuario->getEstado() . ". " . $usuario->getCep() . "." ?>
-                                                    </p>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </div>
+                    <div class="container" id="info">
+                        <ul class="collapsible custom-collapsible">
+                            <li>
+                                <div class="collapsible-header"><i class="material-icons">info_outline</i>
+                                    <span>Informações do Comprador</span>
+                                    <i class="material-icons">arrow_drop_down</i>
+                                </div>
+                                <div class="collapsible-body">
+                                    <p>CPF: <?php echo $usuario->getNome() ?></p>
+                                    <p>CPF: <?php echo $usuario->getCpf() ?></p>
+                                    <p>E-mail: <?php echo $usuario->getEmail() ?></p>
+                                    <p>Telefone: <?php echo $usuario->getTelefone() ?></p>
+                                    <p>Endereço:
+                                        <?php echo $usuario->getEndereco() . ", " . $usuario->getNumero() . ". " . $usuario->getCidade() . "/" . $usuario->getEstado() . ". " . $usuario->getCep() . "." ?>
+                                    </p>
                                 </div>
                             </li>
                         </ul>
+                    </div>
+                </div>
+            </li>
+        </ul>
 
-                    <?php
+        <?php
                     }
                 } else { ?>
 
-                    <ul class="collapsible <?php echo $collapsible ?>">
-                        <li>
-                            <div class="collapsible-header"><i class="material-icons">directions_bus</i>
-                                <span class="item">Nº: <?php echo $pedido->getId() ?></span>
-                                <span class="item">Data da Compra: <?php echo $pedido->getCriado() ?></span>
-                                <span class="item">Valor Total: <?php echo $pedido->getTotal() ?></span>
-                                <span class="item">Status: <?php echo $pedido->getSituacao() ?></span>
-                                <i class="material-icons">arrow_drop_down</i>
-                            </div>
+        <ul class="collapsible <?php echo $collapsible ?>">
+            <li>
+                <div class="collapsible-header"><i class="material-icons">directions_bus</i>
+                    <span class="item">Nº: <?php echo $pedido->getId() ?></span>
+                    <span class="item">Data da Compra: <?php echo $pedido->getCriado() ?></span>
+                    <span class="item">Valor Total: <?php echo $pedido->getTotal() ?></span>
+                    <span class="item">Status: <?php echo $pedido->getSituacao() ?></span>
+                    <i class="material-icons">arrow_drop_down</i>
+                </div>
 
-                            <div class="collapsible-body">
+                <div class="collapsible-body">
 
-                                <p class="topo">Forma de pagamento: <?php echo $pedido->getPagamento() ?></p>
-                                <p class="topo">Forma de recebimento: <?php echo $pedido->getEntrega() ?></p>
+                    <p class="topo">Forma de pagamento: <?php echo $pedido->getPagamento() ?></p>
+                    <p class="topo">Forma de recebimento: <?php echo $pedido->getEntrega() ?></p>
 
-                                <?php
+                    <?php
                                 if ($pedido->getSituacao() == "Processando" || $pedido->getSituacao() == "Enviado") { ?>
-                                    <form action="minhascompras.php" method="post">
-                                        <button type="submit" name="cancelar" value="<?php echo $pedido->getId() ?>" class="button">
-                                            <span class="button-content">Cancelar Compra</span>
-                                        </button>
-                                    </form>
+                    <form action="minhascompras.php" method="post">
+                        <button type="submit" name="cancelar" value="<?php echo $pedido->getId() ?>" class="button">
+                            <span class="button-content">Cancelar Compra</span>
+                        </button>
+                    </form>
 
-                                <?php } elseif ($pedido->getSituacao() == "Entregue") { ?>
-                                    <form action="minhascompras.php" method="post">
-                                        <button type="submit" name="devolver" value="<?php echo $pedido->getId() ?>" class="button">
-                                            <span class="button-content">Devolver Compra</span>
-                                        </button>
-                                    </form>
+                    <?php } elseif ($pedido->getSituacao() == "Entregue") { ?>
+                    <form action="minhascompras.php" method="post">
+                        <button type="submit" name="devolver" value="<?php echo $pedido->getId() ?>" class="button">
+                            <span class="button-content">Devolver Compra</span>
+                        </button>
+                    </form>
 
-                                    <?php }
+                    <?php }
                                 foreach ($objetoCarrinho as $produtoData) {
                                     $produto = new Produto($produtoData);
                                     $produtoId = $produto->getId();
@@ -212,29 +226,29 @@ include_once __DIR__ . '../Controller/PedidoDAO.php';
                                         foreach ($itensPorProduto[$produtoId] as $item) {
                                     ?>
 
-                                            <div class="container" id="items">
-                                                <ul class="collection">
-                                                    <li class="collection-item avatar">
-                                                        <img src="<?php echo $produto->getImagem() ?>" alt="" class="circle">
-                                                        <span class="title"><?php echo $produto->getNome() ?></span>
-                                                        <p><?php echo $produto->getDescricao() ?></p>
-                                                        <p>R$: <?php echo $produto->getValor() ?></p>
-                                                        <p><?php echo $item->getQuantidade() . " unidades" ?></p>
-                                                        <p class="secondary-content">Valor total deste item: R$
-                                                            <?php echo $pTotal = $produto->getValor() * $item->getQuantidade(); ?></p>
-                                                    </li>
-                                                </ul>
-                                            </div>
+                    <div class="container" id="items">
+                        <ul class="collection">
+                            <li class="collection-item avatar">
+                                <img src="<?php echo $produto->getImagem() ?>" alt="" class="circle">
+                                <span class="title"><?php echo $produto->getNome() ?></span>
+                                <p><?php echo $produto->getDescricao() ?></p>
+                                <p>R$: <?php echo $produto->getValor() ?></p>
+                                <p><?php echo $item->getQuantidade() . " unidades" ?></p>
+                                <p class="secondary-content">Valor total deste item: R$
+                                    <?php echo $pTotal = $produto->getValor() * $item->getQuantidade(); ?></p>
+                            </li>
+                        </ul>
+                    </div>
 
-                                <?php
+                    <?php
                                         }
                                     }
                                 }
                                 ?>
 
-                            </div>
-                        </li>
-                    </ul>
+                </div>
+            </li>
+        </ul>
         <?php }
             }
         }

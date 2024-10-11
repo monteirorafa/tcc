@@ -152,6 +152,7 @@
 .material-tooltip {
     background-color: #000080
 }
+
 .material-tooltip .tooltip-content {
     color: white
 }
@@ -300,3 +301,31 @@
     display: inline-block;
 }
 /*Fim Checkout*/
+
+/*Termos pesquisado*/
+.limpar {
+    background-color: #f0f0f0;
+    border-radius: 2rem;
+    width: fit-content;
+    padding: 0.5rem 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: inline-flex;
+    align-items: center;
+    font-family: Arial, sans-serif;
+}
+
+.limpar .termo {
+    margin-right: 0.5rem;
+}
+
+.limpar .divisor {
+    border-left: 1px solid #ccc;
+    height: 1rem;
+    margin: 0 0.5rem;
+}
+
+.closed {
+    cursor: pointer;
+    vertical-align: middle;
+}
+/*Fim termos pesquisado*/

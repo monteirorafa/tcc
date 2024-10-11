@@ -23,6 +23,7 @@ include_once __DIR__ . '/Controller/Menu.php';
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
     <link rel="stylesheet" href="css/menu.css">
+    <script src="js/menu.js"></script>
 </head>
 
 <body>
@@ -38,12 +39,12 @@ include_once __DIR__ . '/Controller/Menu.php';
                     </div>
 
                     <div class="col s8 hide-on-med-and-down" id="pesq">
-                        <form>
+                        <form id="searchForm" action="produtos.php" method="post">
                             <div class="input-field">
-                                <input id="search" type="search" placeholder="Buscar..." required>
-                                <label class="label-icon" for="search"><i class="material-icons">search</i>
-                                </label>
-                                <i class="material-icons closed">close</i>
+                                <input id="search" type="search" name="search" placeholder="Buscar..." required>
+                                <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+                                <i class="material-icons closed"
+                                    onclick="document.getElementById('search').value=''">close</i>
                             </div>
                         </form>
                     </div>

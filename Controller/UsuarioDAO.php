@@ -148,4 +148,14 @@ class UsuarioDAO
             echo "Erro: " . $this->conexao->errorInfo();
         }
     }
+
+    public function buscaUsuarios($termo)
+    {
+        $pstmt = $this->conexao->prepare("SELECT * FROM usuario WHERE nome LIKE :termo OR cpf LIKE :termo OR email LIKE :termo OR cidade LIKE :termo ORDER BY nome, email, cpf, cidade");
+        $termo = "%" . $termo . "%";
+        $pstmt->bindParam(':termo', $termo, PDO::PARAM_STR);
+        $pstmt->execute();
+        $produto = $pstmt->fetchAll(PDO::FETCH_CLASS, Usuario::class);
+        return $produto;
+    }
 }

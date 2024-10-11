@@ -23,7 +23,7 @@ include_once __DIR__ . '../Controller/CarrinhoDAO.php';
 
     <link rel="stylesheet" href="css/index.css">
     <link rel="stylesheet" href="css/produtos.css">
-    <script src="js/produtos.js"></script>
+
 </head>
 
 <main>
@@ -45,10 +45,27 @@ include_once __DIR__ . '../Controller/CarrinhoDAO.php';
         <?php
         $cont = 0;
         $produtoDAO = new ProdutoDAO();
-        $objetoProduto = $produtoDAO->consultaProdutos();
+
+        if (isset($_POST["search"])) {
+            $objetoProduto = $produtoDAO->buscaProdutos($_POST["search"]);
+            $busca = true; ?>
+
+        <div class="limpar">
+            <span class="termo"><?php echo $_POST["search"] ?></span>
+            <span class="divisor"></span>
+            <i class="tiny material-icons closed" onclick="window.location.href='produtos.php';">close</i>
+        </div>
+
+        <?php
+        } else {
+            $objetoProduto = $produtoDAO->consultaProdutos();
+            $busca = false;
+        }
         ?>
 
         <div class="row">
+
+            <script src="js/produtos.js"></script>
 
             <?php
             foreach ($objetoProduto as $produto) {

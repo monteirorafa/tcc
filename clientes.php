@@ -25,6 +25,10 @@ include_once __DIR__ . '../Controller/UsuarioDAO.php';
             <h1>Clientes</h1>
         </div>
 
+        <form class="searchForm" action="clientes.php" method="post">
+            <input class="busca" id="search" name="search" type="search" placeholder="Buscar...">
+        </form>
+
         <table class="highlight centered responsive-table">
             <thead>
                 <tr>
@@ -41,19 +45,36 @@ include_once __DIR__ . '../Controller/UsuarioDAO.php';
             <tbody>
                 <?php
                 $usuarioDAO = new UsuarioDAO();
-                $objetoUsuario = $usuarioDAO->selectUsuarios();
+
+                if (isset($_POST["search"])) {
+                    $objetoUsuario = $usuarioDAO->buscaUsuarios($_POST["search"]);
+                    $busca = true; ?>
+
+                <div class="limpar">
+                    <span class="termo"><?php echo $_POST["search"] ?></span>
+                    <span class="divisor"></span>
+                    <i class="tiny material-icons closed" onclick="window.location.href='clientes.php';">close</i>
+                </div>
+
+                <?php
+                } else {
+                    $objetoUsuario = $usuarioDAO->selectUsuarios();
+                    $busca = false;
+                }
+
                 foreach ($objetoUsuario as $usuario) {
                     $usuario = new Usuario($usuario);
                 ?>
-                    <tr>
-                        <td><?php echo $usuario->getNome() ?></td>
-                        <td><?php echo $usuario->getCPF() ?></td>
-                        <td><?php echo $usuario->getEmail() ?></td>
-                        <td><?php echo $usuario->getTelefone() ?></td>
-                        <td><?php echo $usuario->getEndereco() .  ", " . $usuario->getNumero() ?></td>
-                        <td><?php echo $usuario->getCidade() .  " / " . $usuario->getEstado() ?></td>
-                        <td><?php echo $usuario->getCep() ?></td>
-                    </tr>
+
+                <tr>
+                    <td><?php echo $usuario->getNome() ?></td>
+                    <td><?php echo $usuario->getCPF() ?></td>
+                    <td><?php echo $usuario->getEmail() ?></td>
+                    <td><?php echo $usuario->getTelefone() ?></td>
+                    <td><?php echo $usuario->getEndereco() .  ", " . $usuario->getNumero() ?></td>
+                    <td><?php echo $usuario->getCidade() .  " / " . $usuario->getEstado() ?></td>
+                    <td><?php echo $usuario->getCep() ?></td>
+                </tr>
                 <?php } ?>
             </tbody>
         </table>

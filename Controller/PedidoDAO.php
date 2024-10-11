@@ -56,7 +56,7 @@ class PedidoDAO
     public function consultaPedido(array $idCarrinho)
     {
         $arrayIds = implode(',', array_fill(0, count($idCarrinho), '?'));
-        $pstmt = $this->conexao->prepare("SELECT * FROM pedidos WHERE idCarrinho IN ($arrayIds)");
+        $pstmt = $this->conexao->prepare("SELECT * FROM pedidos WHERE idCarrinho IN ($arrayIds) ORDER BY criado");
         $pstmt->execute(array_values($idCarrinho));
         $lista = $pstmt->fetchAll(PDO::FETCH_CLASS, Pedido::class);
         return $lista;
@@ -126,5 +126,15 @@ class PedidoDAO
         } else {
             echo "Erro: " . $pstmt->errorInfo()[2];
         }
+    }
+
+    public function buscaPedido($termo)
+    {
+        $pstmt = $this->conexao->prepare("SELECT * FROM usuario WHERE nome LIKE :termo OR cpf LIKE :termo OR email LIKE :termo OR cidade LIKE :termo ORDER BY nome, email, cpf, cidade");
+        $termo = "%" . $termo . "%";
+        $pstmt->bindParam(':termo', $termo, PDO::PARAM_STR);
+        $pstmt->execute();
+        $usuario = $pstmt->fetchAll(PDO::FETCH_CLASS, Usuario::class);
+        return $usuario;
     }
 }
