@@ -45,9 +45,9 @@ class PedidoDAO
                 $carrinho->bindValue(":idUsuario", $idUsuario);
                 $carrinho->execute();
             }
-
-            echo "<script> alert('Pedido realizado.');</script>";
-            header('Location: index.php');
+            echo "<script> alert('Pedido realizado com sucesso.');
+            window.location.href = 'index.php';
+            </script>";
         } else {
             echo "Erro " . $pstmt . "<br>" . $this->conexao->errorInfo();
         }

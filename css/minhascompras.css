@@ -99,6 +99,14 @@
 .secondary-content {
     color: black;
 }
+
+.title {
+    font-weight: bolder;
+}
+
+.collection .collection-item.avatar .circle {
+    top: 35px;
+}
 /*Fim dentro do collapsable*/
 
 /*Botão*/
@@ -144,4 +152,121 @@
     background: linear-gradient(82.3deg, #8A2BE2 10.8%, #000080 94.3%);
     transition: all 0.475s;
   }
-  /*Fim botão*/
+/*Fim botão*/
+
+/*Radio*/
+.radio {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+}
+  
+.radio label {
+    display: flex;
+    cursor: pointer;
+    font-weight: 500;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 0.375em;
+}
+  
+.radio  label input {
+    position: absolute;
+    left: -9999px;
+}
+  
+.radio label input:checked + span {
+    background-color: #414181;
+    color: white;
+}
+  
+.radio label input:checked + span:before {
+    box-shadow: inset 0 0 0 0.4375em #00005c;
+}
+  
+.radio label span {
+    display: flex;
+    align-items: center;
+    padding: 0.375em 0.75em 0.375em 0.375em;
+    border-radius: 99em;
+    transition: 0.25s ease;
+    color: #414181;
+}
+  
+.radio label span:hover {
+    background-color: #d6d6e5;
+}
+  
+.radio label span:before {
+    display: flex;
+    flex-shrink: 0;
+    content: "";
+    background-color: #fff;
+    width: 1.5em;
+    height: 1.5em;
+    border-radius: 50%;
+    margin-right: 0.375em;
+    transition: 0.25s ease;
+    box-shadow: inset 0 0 0 0.125em #00005c;
+}
+
+.radio {
+    flex: 1;
+    margin: 10px 10px;
+    min-height: 200px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    padding: 20px;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+/*Fim radio*/
+
+.card-content {
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+    margin: 0 auto;
+}
+
+.row {
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
+.fim {
+    margin-top: 2rem;
+}
+
+.price {
+    position: relative;
+    font-size: 22px;
+    color: #2B2B2F;
+    font-weight: 900;
+    text-align: center;
+}
+
+.ent {
+    display: none;
+}
+
+.ent.active {
+    display: block;
+}
+
+.message, .signin {
+    color: rgba(88, 87, 87, 0.822);
+    font-size: 14px;
+}
+  
+.signin {
+    text-align: center;
+    vertical-align: middle;
+}
+  
+.signin a {
+    color: royalblue;
+}
+  
+.signin a:hover {
+    text-decoration: underline royalblue;
+}

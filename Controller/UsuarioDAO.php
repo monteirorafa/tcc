@@ -126,4 +126,26 @@ class UsuarioDAO
         $usuario = $pstmt->fetchAll(PDO::FETCH_CLASS, Usuario::class);
         return $usuario;
     }
+
+    public function atualizaCadastro(Usuario $usuario)
+    {
+        $pstmt = $this->conexao->prepare("UPDATE usuario SET nome=:nome, email=:email, cidade=:cidade, endereco=:endereco, numero=:numero, estado=:estado, cep=:cep, telefone=:telefone, senha=:senha WHERE cpf=:cpf");
+        $pstmt->bindValue(":nome", $usuario->getNome());
+        $pstmt->bindValue(":email", $usuario->getEmail());
+        $pstmt->bindValue(":cidade", $usuario->getCidade());
+        $pstmt->bindValue(":endereco", $usuario->getEndereco());
+        $pstmt->bindValue(":numero", $usuario->getNumero());
+        $pstmt->bindValue(":estado", $usuario->getEstado());
+        $pstmt->bindValue(":cep", $usuario->getCep());
+        $pstmt->bindValue(":telefone", $usuario->getTelefone());
+        $pstmt->bindValue(":senha", $usuario->getSenha());
+        $pstmt->bindValue(":cpf", $usuario->getCpf());
+        if ($pstmt->execute()) {
+            echo "<script> alert('Atualizado com sucesso.');
+            window.location.href = 'perfil.php';
+            </script>";
+        } else {
+            echo "Erro: " . $this->conexao->errorInfo();
+        }
+    }
 }

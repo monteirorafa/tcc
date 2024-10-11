@@ -1,0 +1,173 @@
+/*Titulo principal*/
+.titulo h1 {
+    text-align: center;
+    font-size:30px; font-weight:300; color:#27272a; letter-spacing:1px;
+    text-transform: uppercase;
+    display: grid;
+    grid-template-columns: 1fr max-content 1fr;
+    grid-template-rows: 27px 0;
+    grid-gap: 20px;
+    align-items: center;
+}
+      
+.titulo h1:after,.titulo h1:before {
+    content: " ";
+    display: block;
+    border-bottom: 1px solid #8A2BE2;
+    border-top: 1px solid #8A2BE2;
+    height: 5px;
+    background-color: #f8f8f8;
+}
+/*Fim titulo principal*/
+
+/*Inicio form box*/
+.form {
+    background: linear-gradient(#212121, #212121) padding-box,
+                linear-gradient(145deg, transparent 35%, #e81cff, #40c9ff) border-box;
+    border: 2px solid transparent;
+    padding: 30px;
+    font-size: 14px;
+    font-family: inherit;
+    color: white;
+    box-sizing: border-box;
+    border-radius: 16px;
+    width: 80%;
+    margin: 0 auto;
+    margin-top: 5rem;
+}
+
+.form-small {
+    background: linear-gradient(#212121, #212121) padding-box,
+    linear-gradient(145deg, transparent 35%, #e81cff, #40c9ff) border-box;
+    border: 2px solid transparent;
+    padding: 30px;
+    font-size: 14px;
+    font-family: inherit;
+    color: white;
+    box-sizing: border-box;
+    border-radius: 16px;
+    width: 80%;
+    margin: 0 auto;
+    margin-top: 5rem;
+}
+
+.custom-row {
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
+.form h1 {
+    text-align: center;
+    font-size: 3rem;
+    margin: 1rem 1rem;
+    padding-bottom: 1rem;
+}
+
+.form-small h1 {
+    text-align: center;
+    font-size: 3rem;
+    margin: 1rem 1rem;
+    padding-bottom: 1rem;
+}
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-container button:active {
+    scale: 0.95;
+}
+
+.form-container .form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-container .form-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: #fff;
+    font-weight: 600;
+    font-size: 18px;
+    text-align: center;
+}
+
+.form-container .form-group input {
+    width: 75%;
+    align-self: center;
+    text-align: center;
+    padding: 12px 16px;
+    border-radius: 8px;
+    color: #fff;
+    font-family: inherit;
+    font-size: 18px;
+    background-color: transparent;
+    border: 1px solid #414141;
+}
+
+.form-container .form-group input::placeholder {
+    opacity: 0.5;
+}
+
+.form-container .form-group input:focus {
+    outline: none;
+    border-color: #e81cff;
+}
+/*Fim form box*/
+
+/*Inicio buttons*/
+.button-container {
+    display: flex;
+    justify-content: center;
+}
+
+button {
+    font-family: inherit;
+    display: inline-block;
+    width: 10em;
+    height: 2.6em;
+    line-height: 2.5em;
+    margin: 20px;
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+    border: 2px solid #8A2BE2;
+    transition: color 0.5s;
+    z-index: 1;
+    font-size: 17px;
+    border-radius: 6px;
+    font-weight: 500;
+    color: #8A2BE2;
+}
+  
+button:before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    background: #8A2BE2;
+    height: 100px;
+    width: 300px;
+    border-radius: 50%;
+}
+  
+button:hover {
+    color: #fff;
+}
+  
+button:before {
+    top: 100%;
+    left: 100%;
+    transition: all 0.7s;
+}
+  
+button:hover:before {
+    top: -30px;
+    left: -30px;
+}
+  
+button:active:before {
+    background: #3a0ca3;
+    transition: background 0s;
+}
+/*Fim buttons*/

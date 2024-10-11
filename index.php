@@ -244,12 +244,12 @@ include_once __DIR__ . '../Controller/CarrinhoDAO.php';
             </div>
 
             <?php
-                foreach ($objetoProduto as $produto) {
-                    $produto = new Produto($produto);
-                    if ($cont % 4 === 0) {
-                        echo "</div><div class='row'>";
-                    };
-                ?>
+            foreach ($objetoProduto as $produto) {
+                $produto = new Produto($produto);
+                if ($cont % 4 === 0) {
+                    echo "</div><div class='row'>";
+                };
+            ?>
 
             <div class="col s12 m3">
                 <div class="card">
@@ -258,14 +258,14 @@ include_once __DIR__ . '../Controller/CarrinhoDAO.php';
                         <img class="custom-image" src="<?php echo $produto->getImagem() ?>" alt="">
 
                         <?php
-                                $adm = isset($_SESSION['adm']) && $_SESSION['adm'] == 1;
-                                if ($adm && isset($_SESSION['id'])) { ?>
+                            $adm = isset($_SESSION['adm']) && $_SESSION['adm'] == 1;
+                            if ($adm && isset($_SESSION['id'])) { ?>
 
                         <form method="post" action="alteraProduto.php"
                             id="productForm-<?php echo $produto->getId(); ?>">
                             <input type="hidden" name="altera" value="<?php echo $produto->getId(); ?>">
-                            <a class="btn-floating halfway-fab waves-effect waves-light indigo darken-4 tooltipped custom-tooltip"
-                                id="submitBtn-<?php echo $produto->getId(); ?>" data-position="left"
+                            <a class="btn-floating halfway-fab waves-effect waves-light indigo darken-4 tooltipped custom-tooltip changeBtn"
+                                id="changeBtn-<?php echo $produto->getId(); ?>" data-position="left"
                                 data-tooltip="Alterar Produto"><i class="material-icons">edit</i></a>
                         </form>
 
@@ -284,30 +284,29 @@ include_once __DIR__ . '../Controller/CarrinhoDAO.php';
                     </div>
 
                     <div class="card-content">
-                        <div class="nome">
-                            <span class="card-title"><?php echo $produto->getNome(); ?>
-                                <span class="categoria">(<?php echo $produto->getCategoria(); ?>)</span>
-                            </span>
-                        </div>
-                        <p name="valor" class="product-price" value="<?php echo $produto->getValor(); ?>"
-                            title="<?php echo $produto->getValor(); ?>">R$ <?php echo $produto->getValor(); ?>
-                        </p>
+                        <span class="card-title"><?php echo $produto->getNome(); ?></span>
+                        <span class="categoria"><?php echo $produto->getCategoria(); ?></span>
                         <p class="descricao"><?php echo $produto->getDescricao(); ?></p>
-                        <?php if ($adm && isset($_SESSION['id'])) { ?>
-                        <p class="estoque">Estoque: <?php echo $produto->getQuantidade(); ?></p>
-                        <?php } ?>
+                        <div class="card-footer">
+                            <span name="valor" class="product-price" value="<?php echo $produto->getValor(); ?>"
+                                title="<?php echo $produto->getValor(); ?>">R$ <?php echo $produto->getValor(); ?>
+                            </span>
+                            <?php if ($adm && isset($_SESSION['id'])) { ?>
+                            <span class="estoque">Estoque: <?php echo $produto->getQuantidade(); ?></span>
+                            <?php } ?>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <?php
-                    $cont++;
-                }
-                if (isset($_POST["carrinho"])) {
-                    $carrinhoDAO = new CarrinhoDAO();
-                    $carrinhoDAO->adicionaCarrinho($_POST["carrinho"], $_SESSION['id']);
-                }
-                ?>
+                $cont++;
+            }
+            if (isset($_POST["carrinho"])) {
+                $carrinhoDAO = new CarrinhoDAO();
+                $carrinhoDAO->adicionaCarrinho($_POST["carrinho"], $_SESSION['id']);
+            }
+            ?>
 
         </div>
     </div>

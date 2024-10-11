@@ -47,7 +47,9 @@ include_once __DIR__ . '../Controller/PedidoDAO.php';
             $objetoCarrinho = $produtoDAO->produtosCarrinhoInativo();
             $carrinhoID = $carrinhoDAO->consultaCarrinhoInativo();
             echo "<title>Minhas Compras</title>";
-            echo "<h1 class='titulo'>Minhas Compras</h1>";
+            echo "<div class='titulo'>";
+            echo "<h1>Minhas Compras</h1>";
+            echo "</div>";
         }
 
         foreach ($carrinhoID as $carrinho) {
@@ -129,7 +131,7 @@ include_once __DIR__ . '../Controller/PedidoDAO.php';
                                                     <ul class="collection">
                                                         <li class="collection-item avatar">
                                                             <img src="<?php echo $produto->getImagem() ?>" alt="" class="circle">
-                                                            <strong><span class="title"><?php echo $produto->getNome() ?></span></strong>
+                                                            <span class="title"><?php echo $produto->getNome() ?></span>
                                                             <p><?php echo $produto->getDescricao() ?></p>
                                                             <p>R$: <?php echo $produto->getValor() ?></p>
                                                             <p><?php echo $item->getQuantidade() . " unidades" ?></p>
@@ -214,7 +216,7 @@ include_once __DIR__ . '../Controller/PedidoDAO.php';
                                                 <ul class="collection">
                                                     <li class="collection-item avatar">
                                                         <img src="<?php echo $produto->getImagem() ?>" alt="" class="circle">
-                                                        <strong><span class="title"><?php echo $produto->getNome() ?></span></strong>
+                                                        <span class="title"><?php echo $produto->getNome() ?></span>
                                                         <p><?php echo $produto->getDescricao() ?></p>
                                                         <p>R$: <?php echo $produto->getValor() ?></p>
                                                         <p><?php echo $item->getQuantidade() . " unidades" ?></p>

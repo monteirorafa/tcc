@@ -13,17 +13,22 @@ document.addEventListener('DOMContentLoaded', function() {
             var form = document.getElementById(formId);
             var formData = new FormData(form);
 
-            fetch(form.action, {
-                method: 'POST',
-                body: formData,
-            })
-            .then(response => response.text())
-            .then(data => {
-                M.toast({html: 'Item adicionado ao carrinho'});
-            })
-            .catch(error => {
-                console.error('Erro:', error);
-            });
+            if (btn.id.startsWith('submitBtn')) {
+                fetch(form.action, {
+                    method: 'POST',
+                    body: formData,
+                })
+                .then(response => response.text())
+                .then(data => {
+                    M.toast({html: 'Item adicionado ao carrinho'});
+                })
+                .catch(error => {
+                    console.error('Erro:', error);
+                });
+            } else if (btn.id.startsWith('changeBtn')) {
+                form.action = 'alteraProduto.php';
+                form.submit(); // Envia o formulário para a página alteraProduto.php
+            }
         });
     });
 });

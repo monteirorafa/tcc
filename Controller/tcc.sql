@@ -37,6 +37,20 @@ CREATE TABLE `carrinho` (
 -- --------------------------------------------------------
 
 --
+-- Estrutura da tabela `cartao`
+--
+
+CREATE TABLE `cartao` (
+  `id` int(11) NOT NULL,
+  `idUsuario` int(11) NOT NULL,
+  `numero` varchar(20) NOT NULL,
+  `vencimento` date NOT NULL,
+  `cvv` int(3) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura da tabela `itemcarrinho`
 --
 
@@ -137,6 +151,13 @@ ALTER TABLE `carrinho`
   ADD KEY `FKidUsuario` (`idUsuario`);
 
 --
+-- Índices para tabela `cartao`
+--
+ALTER TABLE `cartao`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FKidUsuario` (`idUsuario`);
+
+--
 -- Índices para tabela `itemcarrinho`
 --
 ALTER TABLE `itemcarrinho`
@@ -182,6 +203,12 @@ ALTER TABLE `carrinho`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT de tabela `cartao`
+--
+ALTER TABLE `cartao`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de tabela `itemcarrinho`
 --
 ALTER TABLE `itemcarrinho`
@@ -220,6 +247,12 @@ ALTER TABLE `usuario`
 --
 ALTER TABLE `carrinho`
   ADD CONSTRAINT `carrinhoFKidUsuario` FOREIGN KEY (`idUsuario`) REFERENCES `usuario` (`id`);
+
+--
+-- Limitadores para a tabela `carrinho`
+--
+ALTER TABLE `cartao`
+  ADD CONSTRAINT `cartaoFKidUsuario` FOREIGN KEY (`idUsuario`) REFERENCES `usuario` (`id`);
 
 --
 -- Limitadores para a tabela `itemcarrinho`

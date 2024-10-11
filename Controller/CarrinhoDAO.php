@@ -87,20 +87,12 @@ class CarrinhoDAO
         return $id;
     }
 
-    public function editarCarrinho(ItemCarrinho $itemcarrinho)
+    public function editarCarrinho($id, $quantidade)
     {
-        $updateCarrinho = $this->conexao->prepare("UPDATE itemcarrinho SET quantidade=:quantidade WHERE idProduto = :idProduto AND idCarrinho = :idCarrinho");
-        $updateCarrinho->bindValue(':quantidade', $itemcarrinho->getQuantidade());
-        $updateCarrinho->bindValue(':idProduto', $itemcarrinho->getIdProduto());
-        $updateCarrinho->bindValue(":idCarrinho", $itemcarrinho->getIdCarrinho());
+        $updateCarrinho = $this->conexao->prepare("UPDATE itemcarrinho SET quantidade = :quantidade WHERE idProduto = :id");
+        $updateCarrinho->bindValue(":quantidade", $quantidade);
+        $updateCarrinho->bindValue(":id", $id);
         $updateCarrinho->execute();
-        if ($updateCarrinho) {
-            echo "<script> alert('Quantidade modificada.');
-            window.location.href = 'Carrinho.php';
-            </script>";
-        } else {
-            echo "Erro " . $updateCarrinho . "<br>" . $this->conexao->errorInfo();
-        }
     }
 
     public function excluirCarrinho(ItemCarrinho $itemcarrinho)

@@ -11,7 +11,7 @@
 <body class="cadastro">
     <div class="row">
 
-        <form action="cadastroProduto.php" method="post" enctype="multipart/form-data" class="form">
+        <form action="cadastroProduto.php" method="post" enctype="multipart/form-data">
 
             <h1>Cadastro de Produto</h1>
 
@@ -42,8 +42,8 @@
 
                 <div class="form-group">
                     <label for="quantidade">Quantidade</label>
-                    <input type="text" name="quantidade" id="quantidade" pattern="[0-9.]*"
-                        title="Somente números e ponto para centavos, máximo 10." required>
+                    <input type="text" name="quantidade" id="quantidade" pattern="[0-9]*" title="Somente números."
+                        required>
                 </div>
 
                 <div class="form-group">

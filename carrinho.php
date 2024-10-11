@@ -24,9 +24,6 @@ include_once __DIR__ . '../Controller/ItemCarrinhoDAO.php';
 </head>
 
 <main>
-    <div class="cabecalho">
-        <h1 class="titulo">Carrinho</h1>
-    </div>
 
     <?php
     $vFinal = 0;
@@ -38,27 +35,22 @@ include_once __DIR__ . '../Controller/ItemCarrinhoDAO.php';
     <div class="container">
         <div class="row">
 
+            <div class='titulo'>
+                <h1>Carrinho</h1>
+            </div>
+
             <?php
             $vTotal = 0;
             $cont = 0;
             if (empty($objetoCarrinho)) {
-                echo "O carrinho está vazio.";
+                echo "<div class='vazio'>";
+                echo "<p>O carrinho está vazio.</p>";
+                echo "</div>";
             } else {
                 $carrinhoID = $carrinhoDAO->consultaCarrinhoId();
                 $itemDAO = new ItemCarrinhoDAO();
                 $objetoItem = $itemDAO->consultaItem($carrinhoID);
                 $itensPorProduto = [];
-            ?>
-
-            <form action="compra.php" method="post">
-                <div class="button">
-                    <button name="continua" id="continua" <?php if (empty($objetoItem)) {
-                                                                    echo "disabled";
-                                                                } ?>>Continuar</button>
-                </div>
-            </form>
-
-            <?php
 
                 foreach ($objetoItem as $itemData) {
                     $item = new ItemCarrinho($itemData);
@@ -74,43 +66,31 @@ include_once __DIR__ . '../Controller/ItemCarrinhoDAO.php';
                     $produtoId = $produto->getId();
                     if (isset($itensPorProduto[$produtoId])) {
                         foreach ($itensPorProduto[$produtoId] as $item) {
-                            if ($cont % 4 === 0) {
-                                echo "</div><div class='row'>";
-                            }
-                ?>
+            ?>
 
-            <div class="col s12 m6 l3">
-                <div class="card product-card">
-                    <div class="card-image">
-                        <img class="custom-image" src="<?php echo $produto->getImagem() ?>">
-                    </div>
-                    <div class="card-content">
-                        <p class="product-price"> <?php echo $produto->getNome(); ?> </p>
-                        <p class="product-price"> <?php echo $produto->getDescricao(); ?> </p>
-                        <p class="product-price"> Quantidade: </p>
-                        <p class="subTotal"> R$
-                            <?php echo $pTotal = $produto->getValor() * $item->getQuantidade(); ?>
-                        </p>
-                        <form action="carrinho.php" method="post">
-                            <div class="product-price">
-                                <input type="button" name="diminuir" value="-" class="decrement">
-                                <input type="text" name="quantidade" value=""
-                                    placeholder="<?php echo $item->getQuantidade(); ?>" readonly>
-                                <label id="Aux" hidden><?php echo $produto->getQuantidade() ?></label>
-                                <?php if ($item->getQuantidade() < $produto->getQuantidade()) { ?>
-                                <input type="button" name="aumentar" value="+" class="increment">
-                                <?php } else { ?>
-                                <input type="button" name="aumentar" value="+" class="increment" disabled>
-                                <?php } ?>
+            <div class="container">
+                <ul class="collection">
+                    <li class="collection-item avatar">
+                        <img src="<?php echo $produto->getImagem() ?>" alt="" class="circle">
+                        <span class="title"><?php echo $produto->getNome() ?></span>
+                        <p><?php echo $produto->getDescricao() ?></p>
+                        <p>R$: <?php echo $produto->getValor() ?></p>
+
+                        <form method="post" action="carrinho.php" id="productForm-<?php echo $item->getId(); ?>">
+                            <input type="hidden" name="editar" value="<?php echo $produto->getId(); ?>">
+                            <div class="quantity">
+                                <button class="minus" aria-label="Decrease">&minus;</button>
+                                <input type="number" class="input-box" name="quantidade"
+                                    value="<?php echo $item->getQuantidade(); ?>" min="1"
+                                    max="<?php echo $produto->getQuantidade() ?>">
+                                <button class="plus" aria-label="Increase">&plus;</button>
                             </div>
-                    </div>
-                </div>
+                        </form>
 
-                <input type="hidden" value="<?php echo $item->getIdProduto(); ?>" name="idProduto">
-                <input type="hidden" value="<?php echo $item->getIdCarrinho(); ?>" name="idCarrinho">
-                <input type="submit" name="editar" value="editar" id="button" class="submit">
-                <input type="submit" name="excluir" value="excluir" id="button" class="submit">
-                </form>
+                        <p class="secondary-content">Valor total deste item: R$
+                            <?php echo $pTotal = $produto->getValor() * $item->getQuantidade(); ?></p>
+                    </li>
+                </ul>
             </div>
 
             <?php
@@ -122,17 +102,39 @@ include_once __DIR__ . '../Controller/ItemCarrinhoDAO.php';
             }
             ?>
 
+            <div class="container">
+                <div class="checkout">
+                    <label class="title">Checkout</label>
+                    <div class="details">
+                        <span>Total dos seus produtos:</span>
+                        <span><?php echo "R$ " . $vTotal ?></span>
+                        <span>Frete:</span>
+                        <span>R$ 0.00</span>
+                    </div>
+                    <div class="checkout--footer">
+                        <label class="price"><?php echo "R$ " . $vTotal ?></label>
+                    </div>
+                    <div class="finalizar">
+                        <button onclick="window.location.href='compra.php';" <?php if (empty($objetoItem)) {
+                                                                                    echo "disabled";
+                                                                                } ?> class="button">
+                            <span class="button-content">Finalizar Compra</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
-    <div class="total">Total R$ <?php echo $vTotal ?> </div>
-
     <?php
-    if (isset($_POST["editar"])) {
+
+    if (isset($_POST["editar"]) && isset($_POST["quantidade"])) {
+        $id = $_POST["editar"];
+        $quantidade = $_POST["quantidade"];
         $carrinhoDAO = new CarrinhoDAO();
-        $itemCarrinho = new ItemCarrinho($_POST);
-        $carrinhoDAO->editarCarrinho($itemCarrinho);
+        $carrinhoDAO->editarCarrinho($id, $quantidade);
     }
+
 
     if (isset($_POST["excluir"])) {
         $carrinhoDAO = new CarrinhoDAO();

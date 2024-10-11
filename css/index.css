@@ -100,8 +100,11 @@
   text-transform: none;
   font-size:.75em;
   font-weight: normal;
-  font-style: italic; font-family: "Playfair Display","Bookman",serif;
-  color:#999; letter-spacing:-0.005em; word-spacing:1px;
+  font-style: italic; 
+  font-family: "Playfair Display","Bookman",serif;
+  color:#999; 
+  letter-spacing:-0.005em; 
+  word-spacing:1px;
   letter-spacing:none;
 }
 

@@ -21,7 +21,7 @@ class Menu
             echo "<li><a href='minhascompras.php'>Minhas Compras</a></li>";
             echo "<li><a href='carrinho.php'>Carrinho</a></li>";
             echo "<li><a href='Controller/Login.php?function=logout'>Sair</a></li>";
-            echo "<li><span> || Olá " . $nome . " ||</span></li>";
+            echo "<li><a href='perfil.php'> Olá || " . $nome . " || </a></li>";
         } else {
             echo "<li><a href='login.php'>Login</a></li>";
             echo "<li><a href='cadastro.php'>Cadastre-se</a></li>";

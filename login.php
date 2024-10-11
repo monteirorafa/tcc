@@ -30,12 +30,12 @@ if (isset($_SESSION['sessaoID'])) {
                     <input type="password" placeholder="Senha" name="senha" autocomplete="one-time-code">
                 </div>
 
-                <a href="cadastro.php" class="cadastro">Não possui cadastro? Clique Aqui.</a>
+                <p class="signin">Não possui cadastro? <a href="cadastro.php">Clique Aqui.</a> </p>
 
                 <div id="erro">
                     <?php
                     if (isset($_GET["erro"])) {
-                        echo "<p>Usuário ou Senha Inválidos.</p>";
+                        echo "<p class='erro'>Usuário ou Senha Inválidos.</p>";
                     }
                     ?>
                 </div>
