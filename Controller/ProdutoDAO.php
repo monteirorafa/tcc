@@ -114,4 +114,13 @@ class ProdutoDAO
         $produto = $pstmt->fetchAll(PDO::FETCH_CLASS, Produto::class);
         return $produto;
     }
+
+    public function filtraCategoria($categoria)
+    {
+        $pstmt = $this->conexao->prepare("SELECT * FROM produto WHERE categoria = :categoria");
+        $pstmt->bindValue(":categoria", $categoria);
+        $pstmt->execute();
+        $produto = $pstmt->fetchAll(PDO::FETCH_CLASS, Produto::class);
+        return $produto;
+    }
 }

@@ -29,7 +29,8 @@
                 </div>
                 <div class="form-group">
                     <label for="cpf">CPF</label>
-                    <input type="text" name="cpf" id="cpf" autocomplete="one-time-code" required>
+                    <input type="text" name="cpf" id="cpf" pattern="[0-9]{11}" title="Somente números, máximo 11"
+                        maxlength="11" autocomplete="one-time-code" required>
                 </div>
                 <div class="form-group">
                     <label for="email">E-mail</label>
@@ -37,8 +38,8 @@
                 </div>
                 <div class="form-group">
                     <label for="telefone">Telefone</label>
-                    <input type="text" name="telefone" id="telefone" pattern="[0-9]{11}" maxlength="11"
-                        autocomplete="one-time-code" required>
+                    <input type="text" name="telefone" id="telefone" pattern="[0-9]{11}"
+                        title="Somente números, máximo 11" maxlength="11" autocomplete="one-time-code" required>
                 </div>
                 <div class="form-group">
                     <label for="senha">Senha</label>
@@ -84,12 +85,18 @@
     </div>
 
     <?php
-    include_once __DIR__ . '../Controller/Usuario.php';
-    include_once __DIR__ . '../Controller/UsuarioDAO.php';
-
     if (isset($_POST["Cadastrar"])) {
+        include_once __DIR__ . '../Controller/Usuario.php';
+        include_once __DIR__ . '../Controller/UsuarioDAO.php';
+
+        $senhaHashed = password_hash($_POST["senha"], PASSWORD_DEFAULT);
+
+        $dadosUsuario = $_POST;
+        $dadosUsuario['senha'] = $senhaHashed;
+
+        $user = new Usuario($dadosUsuario);
+
         $userDAO = new UsuarioDAO();
-        $user = new Usuario($_POST);
         $userDAO->cadastro($user);
     }
     ?>

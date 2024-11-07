@@ -155,7 +155,26 @@ class UsuarioDAO
         $termo = "%" . $termo . "%";
         $pstmt->bindParam(':termo', $termo, PDO::PARAM_STR);
         $pstmt->execute();
-        $produto = $pstmt->fetchAll(PDO::FETCH_CLASS, Usuario::class);
-        return $produto;
+        $usuario = $pstmt->fetchAll(PDO::FETCH_CLASS, Usuario::class);
+        return $usuario;
+    }
+
+    public function buscaPorEmail($email)
+    {
+        $pstmt = $this->conexao->prepare("SELECT * FROM usuario WHERE email = ?");
+        $pstmt->execute([$email]);
+        $row = $pstmt->fetch(PDO::FETCH_ASSOC);
+        if ($row) {
+            return new Usuario($row);
+        }
+        return null;
+    }
+
+    public function atualizaSessao($user, $sessaoID)
+    {
+        $pstmt = $this->conexao->prepare("UPDATE usuario SET sessaoID = :sessaoID WHERE id = :id");
+        $pstmt->bindValue(":id", $user);
+        $pstmt->bindValue(":sessaoID", $sessaoID);
+        $pstmt->execute();
     }
 }

@@ -18,7 +18,7 @@ if (isset($_SESSION['sessaoID'])) {
 <body class="live">
     <div class="row-small">
 
-        <form action="Controller/Login.php?function=login" method="post" class="form">
+        <form action="login.php" method="post" class="form">
 
             <h1>Login</h1>
 
@@ -32,14 +32,6 @@ if (isset($_SESSION['sessaoID'])) {
 
                 <p class="signin">Não possui cadastro? <a href="cadastro.php">Clique Aqui.</a> </p>
 
-                <div id="erro">
-                    <?php
-                    if (isset($_GET["erro"])) {
-                        echo "<p class='erro'>Usuário ou Senha Inválidos.</p>";
-                    }
-                    ?>
-                </div>
-
                 <div class="col s12 button-container">
                     <button name="Entrar" value="Entrar">Entrar</button>
                     <button type="button" class="button" onclick="window.location.href='index.php';">
@@ -48,7 +40,58 @@ if (isset($_SESSION['sessaoID'])) {
                 </div>
             </div>
         </form>
+
+        <?php
+    include_once __DIR__ . '../Controller/UsuarioDAO.php';
+
+    if (isset($_POST["Entrar"])) {
+        $email = $_POST["email"];
+        $senha = $_POST["senha"];
+
+        $userDAO = new UsuarioDAO();
+        $user = $userDAO->buscaPorEmail($email);
+
+        if ($user) {
+            if (password_verify($senha, $user->getSenha())) {
+
+                session_start();
+                session_regenerate_id();
+                $sessaoID = session_id();
+
+                $userDAO->atualizaSessao($user->getId(), $sessaoID);
+
+                $_SESSION['id'] = $user->getId();
+                $_SESSION['sessaoID'] = $sessaoID;
+                $_SESSION['adm'] = $user->getAdm();
+
+                echo "DEU CERTO:";
+                header('location: index.php');
+                exit();
+            } else {
+    ?>
+
+        <div id="erro">
+            <p class='erro'>Usuário ou Senha Inválidos.</p>
+        </div>
+
+        <?php
+                exit();
+            }
+        } else {
+            ?>
+
+        <div id="erro">
+            <p class='erro'>Usuário ou Senha Inválidos.</p>
+        </div>
+
+        <?php
+            exit();
+        }
+    }
+    ?>
+
     </div>
+
 </body>
 
 </html>

@@ -329,3 +329,9 @@
     vertical-align: middle;
 }
 /*Fim termos pesquisado*/
+
+/*Filtro por categoria*/
+select {
+    display: block;
+}
+/*Fim filtro por categoria*/

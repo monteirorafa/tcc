@@ -16,7 +16,7 @@ class Menu
             echo "<li><a href='minhascompras.php'>Minhas Vendas</a></li>";
             echo "<li><a href='clientes.php'>Clientes</a></li>";
             echo "<li><a href='Controller/Login.php?function=logout'>Sair</a></li>";
-            echo "<li><span> || Olá " . $nome . " (ADM) ||</span></li>";
+            echo "<li><a href='perfil.php'> Olá || Administrador || </a></li>";
         } elseif (isset($_SESSION['sessaoID'])) {
             echo "<li><a href='minhascompras.php'>Minhas Compras</a></li>";
             echo "<li><a href='carrinho.php'>Carrinho</a></li>";

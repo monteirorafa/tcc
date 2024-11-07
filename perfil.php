@@ -37,73 +37,73 @@ include_once __DIR__ . '../Controller/CartaoDAO.php';
                 $usuario = new Usuario($usuario);
             ?>
 
-            <form action="perfil.php" method="post" class="form row custom-row">
-                <h1>Cadastro</h1>
+                <form action="perfil.php" method="post" class="form row custom-row">
+                    <h1>Cadastro</h1>
 
-                <div class="col s12 m6 form-container">
-                    <div class="form-group">
-                        <label for="nome">Nome Completo</label>
-                        <input type="text" name="nome" id="nome" autocomplete="one-time-code" required
-                            value="<?php echo $usuario->getNome() ?>">
+                    <div class="col s12 m6 form-container">
+                        <div class="form-group">
+                            <label for="nome">Nome Completo</label>
+                            <input type="text" name="nome" id="nome" autocomplete="one-time-code" required
+                                value="<?php echo $usuario->getNome() ?>">
+                        </div>
+                        <div class="form-group">
+                            <label for="cpf">CPF</label>
+                            <input type="text" name="cpf" id="cpf" autocomplete="one-time-code" required
+                                value="<?php echo $usuario->getCpf() ?>" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">E-mail</label>
+                            <input type="text" name="email" id="email" autocomplete="one-time-code" required
+                                value="<?php echo $usuario->getEmail() ?>">
+                        </div>
+                        <div class="form-group">
+                            <label for="telefone">Telefone</label>
+                            <input type="text" name="telefone" id="telefone" pattern="[0-9]{11}" maxlength="11"
+                                autocomplete="one-time-code" required value="<?php echo $usuario->getTelefone() ?>">
+                        </div>
+                        <div class="form-group">
+                            <label for="senha">Senha</label>
+                            <input type="password" name="senha" id="senha" maxlength="20" autocomplete="one-time-code"
+                                required value="*">
+                            <span class="lnr lnr-eye"></span>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="cpf">CPF</label>
-                        <input type="text" name="cpf" id="cpf" autocomplete="one-time-code" required
-                            value="<?php echo $usuario->getCpf() ?>" disabled>
-                    </div>
-                    <div class="form-group">
-                        <label for="email">E-mail</label>
-                        <input type="text" name="email" id="email" autocomplete="one-time-code" required
-                            value="<?php echo $usuario->getEmail() ?>">
-                    </div>
-                    <div class="form-group">
-                        <label for="telefone">Telefone</label>
-                        <input type="text" name="telefone" id="telefone" pattern="[0-9]{11}" maxlength="11"
-                            autocomplete="one-time-code" required value="<?php echo $usuario->getTelefone() ?>">
-                    </div>
-                    <div class="form-group">
-                        <label for="senha">Senha</label>
-                        <input type="password" name="senha" id="senha" maxlength="20" autocomplete="one-time-code"
-                            required value="<?php echo $usuario->getSenha() ?>">
-                        <span class="lnr lnr-eye"></span>
-                    </div>
-                </div>
 
-                <div class="col s12 m6 form-container">
-                    <div class="form-group">
-                        <label for="cidade">Cidade</label>
-                        <input type="text" name="cidade" id="cidade" autocomplete="one-time-code" required
-                            value="<?php echo $usuario->getCidade() ?>">
+                    <div class="col s12 m6 form-container">
+                        <div class="form-group">
+                            <label for="cidade">Cidade</label>
+                            <input type="text" name="cidade" id="cidade" autocomplete="one-time-code" required
+                                value="<?php echo $usuario->getCidade() ?>">
+                        </div>
+                        <div class="form-group">
+                            <label for="endereco">Endereço</label>
+                            <input type="text" name="endereco" id="endereco" autocomplete="one-time-code" required
+                                value="<?php echo $usuario->getEndereco() ?>">
+                        </div>
+                        <div class="form-group">
+                            <label for="numero">Número</label>
+                            <input type="text" name="numero" id="numero" autocomplete="one-time-code" required
+                                value="<?php echo $usuario->getNumero() ?>">
+                        </div>
+                        <div class="form-group">
+                            <label for="estado">Estado</label>
+                            <input type="text" name="estado" id="estado" autocomplete="one-time-code" required
+                                value="<?php echo $usuario->getEstado() ?>">
+                        </div>
+                        <div class="form-group">
+                            <label for="cep">CEP</label>
+                            <input type="text" name="cep" id="cep" pattern="[0-9]{8}" maxlength="8"
+                                title="Somente números, máximo 8." autocomplete="one-time-code" required
+                                value="<?php echo $usuario->getCep() ?>">
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="endereco">Endereço</label>
-                        <input type="text" name="endereco" id="endereco" autocomplete="one-time-code" required
-                            value="<?php echo $usuario->getEndereco() ?>">
-                    </div>
-                    <div class="form-group">
-                        <label for="numero">Número</label>
-                        <input type="text" name="numero" id="numero" autocomplete="one-time-code" required
-                            value="<?php echo $usuario->getNumero() ?>">
-                    </div>
-                    <div class="form-group">
-                        <label for="estado">Estado</label>
-                        <input type="text" name="estado" id="estado" autocomplete="one-time-code" required
-                            value="<?php echo $usuario->getEstado() ?>">
-                    </div>
-                    <div class="form-group">
-                        <label for="cep">CEP</label>
-                        <input type="text" name="cep" id="cep" pattern="[0-9]{8}" maxlength="8"
-                            title="Somente números, máximo 8." autocomplete="one-time-code" required
-                            value="<?php echo $usuario->getCep() ?>">
-                    </div>
-                </div>
 
-                <input type="hidden" value="<?php echo $usuario->getCpf(); ?>" name="cpf">
+                    <input type="hidden" value="<?php echo $usuario->getCpf(); ?>" name="cpf">
 
-                <div class="col s12 button-container">
-                    <button name="AtualizarCad" value="AtualizarCad">Atualizar Cadastro</button>
-                </div>
-            </form>
+                    <div class="col s12 button-container">
+                        <button name="AtualizarCad" value="AtualizarCad">Atualizar Cadastro</button>
+                    </div>
+                </form>
 
             <?php }
             $cartaoDAO = new CartaoDAO();
@@ -136,7 +136,7 @@ include_once __DIR__ . '../Controller/CartaoDAO.php';
                         <label for="cvv">CVV</label>
                         <input type="text" name="cvv" id="cvv" pattern="[0-9]{3}" maxlength="3"
                             title="Somente números, máximo 3." autocomplete="one-time-code"
-                            value="<?php echo $cartaoExistente ? $cartaoExistente->getCvv() : ''; ?>" required>
+                            value="<?php echo $cartaoExistente ? "*" : ''; ?>" required>
                     </div>
                 </div>
 
@@ -151,16 +151,27 @@ include_once __DIR__ . '../Controller/CartaoDAO.php';
 
         <?php
         if (isset($_POST["AtualizarCad"])) {
+            $senhaHashed = password_hash($_POST["senha"], PASSWORD_DEFAULT);
+
+            $dadosUsuario = $_POST;
+            $dadosUsuario['senha'] = $senhaHashed;
+
+            $user = new Usuario($dadosUsuario);
+
             $userDAO = new UsuarioDAO();
-            $user = new Usuario($_POST);
             $userDAO->atualizaCadastro($user);
         }
 
         if (isset($_POST["AtualizarCart"])) {
+            $senhaHashed = password_hash($_POST["cvv"], PASSWORD_DEFAULT);
 
-            $cartaoDAO = new CartaoDAO();
-            $cart = new Cartao($_POST);
-            $cartaoDAO->cartao($cart);
+            $dadosUsuario = $_POST;
+            $dadosUsuario['cvv'] = $senhaHashed;
+
+            $user = new Cartao($dadosUsuario);
+
+            $userDAO = new CartaoDAO();
+            $userDAO->cartao($user);
         }
         ?>
 

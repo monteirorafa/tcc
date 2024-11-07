@@ -113,7 +113,7 @@
     border-color: #e81cff;
 }
 
-.form-container .erro {
+.erro {
     text-align: center;
     font-size: 20px;
     color: red;
@@ -331,4 +331,3 @@ button:active:before {
     transition: background 0s;
 }
 /*Fim buttons*/
-
