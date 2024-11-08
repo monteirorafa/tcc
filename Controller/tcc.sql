@@ -45,7 +45,7 @@ CREATE TABLE `cartao` (
   `idUsuario` int(11) NOT NULL,
   `numero` varchar(20) NOT NULL,
   `vencimento` date NOT NULL,
-  `cvv` int(3) NOT NULL
+  `cvv` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -127,7 +127,7 @@ CREATE TABLE `usuario` (
   `estado` varchar(150) NOT NULL,
   `cep` varchar(150) NOT NULL,
   `telefone` varchar(150) NOT NULL,
-  `senha` varchar(150) NOT NULL,
+  `senha` varchar(255) NOT NULL,
   `adm` tinyint(1) NOT NULL,
   `sessaoID` varchar(150) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

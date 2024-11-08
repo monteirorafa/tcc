@@ -95,11 +95,11 @@ class CarrinhoDAO
         $updateCarrinho->execute();
     }
 
-    public function excluirCarrinho(ItemCarrinho $itemcarrinho)
+    public function excluirCarrinho($idProduto, $idCarrinho)
     {
         $deleteCarrinho = $this->conexao->prepare("DELETE FROM itemcarrinho WHERE idProduto = :idProduto AND idCarrinho = :idCarrinho");
-        $deleteCarrinho->bindValue(':idProduto', $itemcarrinho->getIdProduto());
-        $deleteCarrinho->bindValue(':idCarrinho', $itemcarrinho->getIdCarrinho());
+        $deleteCarrinho->bindValue(':idProduto', $idProduto);
+        $deleteCarrinho->bindValue(':idCarrinho', $idCarrinho);
         $deleteCarrinho->execute();
         if ($deleteCarrinho) {
             echo "<script> alert('Item excluido com sucesso.');
