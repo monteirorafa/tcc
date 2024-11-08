@@ -63,7 +63,7 @@ include_once __DIR__ . '../Controller/PedidoDAO.php';
                 <span class="termo"><?php echo $_POST["search"] ?></span>
                 <span class="divisor"></span>
                 <i class="tiny material-icons closed" onclick="<?php if ($adm) {
-                                                                    echo "window.location.href='clientes.php';";
+                                                                    echo "window.location.href='minhascompras.php';";
                                                                 } else {
                                                                     echo "window.location.href='minhascompras.php';";
                                                                 } ?>">
@@ -76,8 +76,15 @@ include_once __DIR__ . '../Controller/PedidoDAO.php';
             $itemDAO = new ItemCarrinhoDAO();
             $objetoItem = $itemDAO->consultaInativo($carrinho);
 
-            $pedidoDAO = new PedidoDAO();
-            $pedidos = $pedidoDAO->consultaPedido($carrinho);
+            if (isset($_POST["search"])) {
+                $pedidoDAO = new PedidoDAO();
+                $pedidos = $pedidoDAO->buscaPedido($_POST["search"]);
+            } else {
+                $pedidoDAO = new PedidoDAO();
+                $pedidos = $pedidoDAO->consultaPedido($carrinho);
+            }
+
+
 
             $itensPorProduto = [];
 
