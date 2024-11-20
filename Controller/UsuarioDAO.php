@@ -31,6 +31,7 @@ class UsuarioDAO
         $pstmt->execute();
         if ($pstmt) {
             echo "<script> alert('Cadastrado com sucesso.');</script>";
+            header('Location: index.php');
         } else {
             echo "Erro " . $pstmt . "<br>" . $this->conexao->errorInfo();
         }
@@ -176,5 +177,14 @@ class UsuarioDAO
         $pstmt->bindValue(":id", $user);
         $pstmt->bindValue(":sessaoID", $sessaoID);
         $pstmt->execute();
+    }
+
+    function validarForcaSenha($senha)
+    {
+        return strlen($senha) >= 8 &&
+            preg_match('/[A-Z]/', $senha) &&
+            preg_match('/[a-z]/', $senha) &&
+            preg_match('/[0-9]/', $senha) &&
+            preg_match('/[\W]/', $senha);
     }
 }

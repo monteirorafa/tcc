@@ -89,14 +89,23 @@
         include_once __DIR__ . '../Controller/Usuario.php';
         include_once __DIR__ . '../Controller/UsuarioDAO.php';
 
-        $senhaHashed = password_hash($_POST["senha"], PASSWORD_DEFAULT);
+        $userDAO = new UsuarioDAO();
+
+        $senha = $_POST["senha"];
+        if (!$userDAO->validarForcaSenha($senha)) { ?>
+            <div id="erro">
+                <p class='erro'><?php die("A senha deve ter no mínimo 8 caracteres, incluindo letras maiúsculas, minúsculas, números e
+            caracteres especiais."); ?></p>
+            </div>
+    <?php }
+
+        $senhaHashed = password_hash($senha, PASSWORD_DEFAULT);
 
         $dadosUsuario = $_POST;
         $dadosUsuario['senha'] = $senhaHashed;
 
         $user = new Usuario($dadosUsuario);
 
-        $userDAO = new UsuarioDAO();
         $userDAO->cadastro($user);
     }
     ?>
