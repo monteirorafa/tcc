@@ -60,7 +60,7 @@
   font-weight:700;
   letter-spacing:0px;
   text-transform:uppercase;
-  width: 25.5rem;
+  width: fit-content;
   text-align:center;
   margin:auto;
   white-space:nowrap;

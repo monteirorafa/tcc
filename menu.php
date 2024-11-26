@@ -8,7 +8,6 @@ include_once __DIR__ . '/Controller/Menu.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <!--Google Font-->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
@@ -17,13 +16,14 @@ include_once __DIR__ . '/Controller/Menu.php';
     <script src="js/menu.js"></script>
 
     <!-- Materialize CSS -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
 
     <!-- Materialize JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
     <link rel="stylesheet" href="css/menu.css">
-    <script src="js/menu.js"></script>
+
+
 </head>
 
 <body>
@@ -31,13 +31,12 @@ include_once __DIR__ . '/Controller/Menu.php';
         <div class="nav-wrapper">
             <div class="container">
                 <div class="row">
-
                     <div class="col s2">
                         <a href="index.php" class="brand-logo">Vitrine Virtual</a>
-                        <a href="#" data-activates="mobile-menu" class="button-collapse"><i
-                                class="material-icons">menu</i></a>
+                        <a href="#" data-target="mobile-menu" class="sidenav-trigger">
+                            <i class="material-icons">menu</i>
+                        </a>
                     </div>
-
                     <div class="col s8 hide-on-med-and-down" id="pesq">
                         <form id="searchForm" action="produtos.php" method="post">
                             <div class="input-field">
@@ -48,7 +47,6 @@ include_once __DIR__ . '/Controller/Menu.php';
                             </div>
                         </form>
                     </div>
-
                     <div class="right hide-on-med-and-down">
                         <ul class="right">
                             <li><a href="index.php">Home</a></li>
@@ -56,9 +54,8 @@ include_once __DIR__ . '/Controller/Menu.php';
                             <?php (new Menu)->menuPrincipal(); ?>
                         </ul>
                     </div>
-
                     <div>
-                        <ul class="side-nav" id="mobile-menu">
+                        <ul class="sidenav" id="mobile-menu">
                             <li><a href="index.php"><i class="material-icons left grey-text">home</i>Home</a></li>
                             <li><a href="produtos.php"><i class="material-icons left grey-text">favorite</i>Produtos</a>
                             </li>
@@ -69,6 +66,8 @@ include_once __DIR__ . '/Controller/Menu.php';
             </div>
         </div>
     </nav>
+
 </body>
+
 
 </html>
