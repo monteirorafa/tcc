@@ -120,6 +120,7 @@
 .card-content p.descricao {        
     font-size: 0.75rem;
     margin-top: 0.5rem;
+    text-align: justify;
 }
 
 .card-content span.product-price {        
@@ -170,6 +171,20 @@
 .collection .collection-item.avatar .title {
     font-weight: bold;
 }
+
+.collection-item p {
+    word-wrap: break-word;
+    white-space: normal;
+    text-align: justify;
+    width: 50%;
+}
+
+.collection-item .secondary-content {
+    position: absolute !important; 
+    top: 20% !important;
+    right: -23% !important;
+}
+
 
 .quantity {
     display: flex;

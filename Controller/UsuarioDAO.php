@@ -30,8 +30,9 @@ class UsuarioDAO
         $pstmt->bindValue(":adm", $usuario->getAdm());
         $pstmt->execute();
         if ($pstmt) {
-            echo "<script> alert('Cadastrado com sucesso.');</script>";
-            header('Location: index.php');
+            echo "<script> alert('Cadastrado com sucesso.');
+            window.location.href = 'index.php';
+            </script>";
         } else {
             echo "Erro " . $pstmt . "<br>" . $this->conexao->errorInfo();
         }

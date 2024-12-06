@@ -36,8 +36,8 @@
 
                 <div class="form-group">
                     <label for="valor">Valor</label>
-                    <input type="text" name="valor" id="valor" pattern="[0-9,]*"
-                        title="Somente números e vírgula para centavos, máximo 10." required>
+                    <input type="text" name="valor" id="valor" pattern="[0-9.]*"
+                        title="Somente números e ponto para centavos, máximo 10." required>
                 </div>
 
                 <div class="form-group">

@@ -142,8 +142,10 @@ include_once __DIR__ . '../Controller/CarrinhoDAO.php';
                             <span class="categoria"><?php echo $produto->getCategoria(); ?></span>
                             <p class="descricao"><?php echo $produto->getDescricao(); ?></p>
                             <div class="card-footer">
-                                <span name="valor" class="product-price" value="<?php echo $produto->getValor(); ?>"
-                                    title="<?php echo $produto->getValor(); ?>">R$ <?php echo $produto->getValor(); ?>
+                                <span name="valor" class="product-price"
+                                    value="<?php echo number_format($produto->getValor(), 2, ',', '.'); ?>"
+                                    title="<?php echo number_format($produto->getValor(), 2, ',', '.'); ?>">
+                                    R$ <?php echo number_format($produto->getValor(), 2, ',', '.'); ?>
                                 </span>
                                 <?php if ($adm && isset($_SESSION['id'])) { ?>
                                     <span class="estoque">Estoque: <?php echo $produto->getQuantidade(); ?></span>

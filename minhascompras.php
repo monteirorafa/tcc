@@ -182,7 +182,7 @@ include_once __DIR__ . '../Controller/PedidoDAO.php';
                                                     <i class="material-icons">arrow_drop_down</i>
                                                 </div>
                                                 <div class="collapsible-body">
-                                                    <p>CPF: <?php echo $usuario->getNome() ?></p>
+                                                    <p>Nome: <?php echo $usuario->getNome() ?></p>
                                                     <p>CPF: <?php echo $usuario->getCpf() ?></p>
                                                     <p>E-mail: <?php echo $usuario->getEmail() ?></p>
                                                     <p>Telefone: <?php echo $usuario->getTelefone() ?></p>

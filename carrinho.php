@@ -149,7 +149,6 @@ include_once __DIR__ . '../Controller/ItemCarrinhoDAO.php';
         $carrinhoDAO->editarCarrinho($id, $quantidade);
     }
 
-
     if (isset($_POST["excluir"])) {
         $carrinhoDAO = new CarrinhoDAO();
         $carrinhoDAO->excluirCarrinho($_POST['excluir'], $_POST['idCarrinho']);

@@ -70,7 +70,7 @@ CREATE TABLE `itemcarrinho` (
 CREATE TABLE `live` (
   `id` int(11) NOT NULL,
   `idUsuario` int(11) NOT NULL,
-  `idVIdeo` varchar(150) DEFAULT NULL,
+  `idVideo` varchar(150) DEFAULT NULL,
   `plataforma` varchar(150) DEFAULT NULL,
   `live` tinyint(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -137,7 +137,25 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`id`, `cpf`, `nome`, `email`, `cidade`, `endereco`, `numero`, `estado`, `cep`, `telefone`, `senha`, `adm`, `sessaoID`) VALUES
-(1, '00000000000', 'Rafael Monteiro', '6.monteiro@gmail.com', 'Mata', 'Rua do ABC', 405, 'RS', '97410000', '55999999999', '123', 1, '');
+(1, '01376520036', 'Rafael Monteiro', '6.monteiro@gmail.com', 'Mata', 'Rua do Comércio', 405, 'RS', '97410000', '55999255135', '$2y$10$.9is8tGY1CPicfCcVcATU.d.lO2DZMga/sXLBOc/V.zTdJ2tk1b6m', 1, '');
+
+INSERT INTO `produto` (`id`, `nome`, `categoria`, `valor`, `quantidade`, `descricao`, `imagem`, `criado`, `atualizado`) VALUES
+(1, 'Bota Anatomic Gel', 'Calçados', '324.90', '10', 'Projetada para oferecer conforto e flexibilidade em cada passo. Com a tecnologia exclusiva 360°.', 'img/c1.png', '2024-12-04 15:33:30', ''),
+(2, 'Social Marluvas', 'Calçados', '169.90', '10', 'Sapato ocupacional confeccionado em couro.  Biqueira True Line.  Colarinho soft acolchoado.  Fechamento em cadarço.', 'img/c2.png', '2024-12-04 15:33:30', ''),
+(3, 'Knu Skool Black', 'Calçados', '549.90', '10', 'Relançamento do tênis de cano baixo dos anos 90. Cabedal de camurça resistente com lingueta e colarinho acolchoados.', 'img/c3.png', '2024-12-04 15:33:30', ''),
+(4, 'Olympikus Venum', 'Calçados', '149.90', '10', 'O seu solado possui dupla camada da Tecnologia Evasense, que proporciona conforto e amortecimento.', 'img/c4.png', '2024-12-04 15:33:30', ''),
+(5, 'Globo Plasma', 'Decoração', '124.45', '10', 'Luminária de Mesa funciona somente com fio, tomada 110v. Botão Liga/Desliga com função de música.', 'img/d1.png', '2024-12-04 15:33:30', ''),
+(6, 'Mesa De Canto', 'Decoração', '78.15', '10', 'Kit 2 Mesinha Lateral Redonda, Cor Branca. 29 cm de diâmetro e pés com altura de 40 cm.', 'img/d2.png', '2024-12-04 15:33:30', ''),
+(7, 'Luminária Pixar', 'Decoração', '59.99', '10', 'Bivolt 110/220v Base Flexivel. Seu design clean e elegante faz com que ela se destaque em qualquer ambiente.', 'img/d3.png', '2024-12-04 15:33:30', ''),
+(8, 'Tripé Ibiza', 'Decoração', '279.50', '10', 'Ilumine seu espaço com estilo! A escolha perfeita para adicionar elegância, conforto e funcionalidade à sua casa.', 'img/d4.png', '2024-12-04 15:33:30', ''),
+(9, 'RisoPhy Mouse', 'Eletrônicos', '340.31', '10', 'Mouse gamer bluetooth, preto e azul. Com RGB configurável. Inclui código para software de configuração.', 'img/e1.png', '2024-12-04 15:33:30', ''),
+(10, 'PlayStation®5 Slim', 'Eletrônicos', '3352.55', '10', 'Edição Digital com SSD de 1TB, modelo CFI-2000. BiVolt, cor branca, acompanha 1 controle.', 'img/e2.png', '2024-12-04 15:33:30', ''),
+(11, 'SSD M2 1TB Kingston', 'Eletrônicos', '409.89', '10', 'SSD encaixe M2 de 1TB marca Kingston Nvme2 Pcie 4.0 3500 Mb/s Cor Preto SNV2 1000G.', 'img/e3.png', '2024-12-04 15:33:30', ''),
+(12, 'Galaxy Buds 2', 'Eletrônicos', '699.00', '10', 'Fones de ouvido Samsung Galaxy Buds 2, sem fi, R177 Onyx Black. Bateria com duração de até 30 horas, acompanha cabo.', 'img/e4.png', '2024-12-04 15:33:30', ''),
+(13, 'Greenk QR Code', 'Roupas', '119.90', '10', 'Camiseta confortável e estilosa de algodão. Ideal para uso diário, combinando facilmente com qualquer look casual.', 'img/r1.png', '2024-12-04 15:33:30', ''),
+(14, 'Mini Jeans Jogger', 'Roupas', '341.05', '10', 'Feita de denim de alta qualidade. Possui elástico na cintura e nos tornozelos, proporcionando um visual moderno.', 'img/r2.png', '2024-12-04 15:33:30', ''),
+(15, 'Boné Liso', 'Roupas', '29.50', '10', 'Um boné preto, feito de tecido resistente com ajuste traseiro. Versátil, elegante e ideal para qualquer ocasião casual.', 'img/r3.png', '2024-12-04 15:33:30', ''),
+(16, 'Casaco de Couro', 'Roupas', '147.59', '10', 'Masculina, cor Preta em couro ecológico. Estilo motoqueiro. Jaqueta de inverno, com bolsos abertos.', 'img/r4.png', '2024-12-04 15:33:30', '');
 
 --
 -- Índices para tabelas despejadas
@@ -169,8 +187,7 @@ ALTER TABLE `itemcarrinho`
 -- Índices para tabela `itemcarrinho`
 --
 ALTER TABLE `live`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `FKidVideo` (`idVideo`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Índices para tabela `pedido`

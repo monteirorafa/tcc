@@ -106,6 +106,13 @@
     border: 1px solid #414141;
 }
 
+.form-container .form-group input[disabled] { 
+    color: #fff; /* Cor branca */ 
+    opacity: 1; /* Para garantir que a opacidade do texto não mude */
+    border: 1px solid #414141;
+    cursor: not-allowed;
+}
+
 .form-container .form-group input::placeholder {
     opacity: 0.5;
 }

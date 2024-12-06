@@ -80,6 +80,7 @@
 .form-container .form-group {
     display: flex;
     flex-direction: column;
+    margin: 0.5rem;
 }
   
 .form-container .form-group label {
@@ -103,6 +104,10 @@
     background-color: transparent;
     border: 1px solid #414141;
 }
+
+.form-container .form-group .imagem input {
+    width: fit-content;
+}
   
 .row .form-container .form-group input::placeholder {
     opacity: 0.5;
@@ -122,11 +127,14 @@
 
 .form-container p.imagem {
     color: white;
+    text-align: center;
+    margin: 0 auto;
+    margin: 0.2rem;
 }
 
 .message, .signin {
     color: rgba(88, 87, 87, 0.822);
-    font-size: 14px;
+    align-content: center;
   }
   
   .signin {

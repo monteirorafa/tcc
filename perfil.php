@@ -134,7 +134,7 @@ include_once __DIR__ . '../Controller/CartaoDAO.php';
 
                     <div class="form-group">
                         <label for="cvv">CVV</label>
-                        <input type="text" name="cvv" id="cvv" pattern="[0-9]{3}" maxlength="3"
+                        <input type="password" name="cvv" id="cvv" pattern="[0-9]{3}" maxlength="3"
                             title="Somente números, máximo 3." autocomplete="one-time-code"
                             value="<?php echo $cartaoExistente ? "*" : ''; ?>" required>
                     </div>
